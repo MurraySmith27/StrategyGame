@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlowField : MonoBehaviour
+public class GridManager : MonoBehaviour
 {
-
-    public enum mouseModes {
-        DEFAULT,
-        PLACE_CITY
-    }
     
-    public static FlowField instance;
+    public static GridManager instance;
 
     public Vector2Int gridSize;
     public float cellWidth = 1f;
@@ -27,7 +22,6 @@ public class FlowField : MonoBehaviour
     public int averageResourceCount = 2;
 
     private ArrayList borderPrefabs;
-    public static mouseModes mouseMode = mouseModes.DEFAULT;
 
     private bool gridChanged = false;
 
@@ -38,11 +32,6 @@ public class FlowField : MonoBehaviour
         if (!instance)
             instance = this;
 
-    }
-
-
-    public static void setMouseMode(mouseModes newMode) {
-        FlowField.mouseMode = newMode;
     }
 
     private void CreateTiles() {

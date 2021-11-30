@@ -19,10 +19,12 @@ public class ResourceTileManager : MonoBehaviour
 
     public GameObject hoverOverCityTilePrefab;
     private GameObject hoverOverCityTile;
+
+    public Camera cam;
     // Start is called before the first frame update
     void Start()
     {
-        
+        cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -60,7 +62,7 @@ public class ResourceTileManager : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("tried to instantiate resource tile with more than 4 growth.");
+                Debug.Log("tried to instantiate resource tile with more than 5 growth.");
                 break;   
         }
     }
@@ -93,27 +95,28 @@ public class ResourceTileManager : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("tried to instantiate resource tile with more than 4 growth.");
+                Debug.Log("tried to instantiate resource tile with more than 5 production.");
                 break;   
         }
     }
 
     public void OnMouseDown() {
-        if (FlowField.mouseMode == FlowField.mouseModes.PLACE_CITY) {
-            FlowField.instance.AddCity(new Vector2Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.z));
-            FlowField.setMouseMode(FlowField.mouseModes.DEFAULT);
+        if (MouseMode.mouseMode == MouseMode.mouseModes.PLACE_CITY) {
+            GridManager.instance.AddCity(new Vector2Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.z));
+            MouseMode.setMouseMode(MouseMode.mouseModes.DEFAULT);
         }
     
     }
 
     public void OnMouseOver() {
-        if (FlowField.mouseMode == FlowField.mouseModes.PLACE_CITY && hoverOverCityTile == null) {
+        Debug.Log("hovering over tile x:" + gameObject.transform.position.x + " y:" + gameObject.transform.position.z);
+        if (MouseMode.mouseMode == MouseMode.mouseModes.PLACE_CITY && hoverOverCityTile == null) {
             hoverOverCityTile = Instantiate(hoverOverCityTilePrefab, gameObject.transform);
         }
     }
 
     public void OnMouseExit() {
-
+        Debug.Log("Leaving tile x:" + gameObject.transform.position.x + " y:" + gameObject.transform.position.z);
         if (hoverOverCityTile != null) {
             Destroy(hoverOverCityTile);
             hoverOverCityTile = null;
