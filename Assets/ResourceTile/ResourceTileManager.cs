@@ -20,6 +20,9 @@ public class ResourceTileManager : MonoBehaviour
     public GameObject hoverOverCityTilePrefab;
     private GameObject hoverOverCityTile;
 
+    public GameObject hoverOverPawnPrefab;
+    private GameObject hoverOverPawn;
+
     public Camera cam;
     // Start is called before the first frame update
     void Start()
@@ -101,25 +104,45 @@ public class ResourceTileManager : MonoBehaviour
     }
 
     public void OnMouseDown() {
-        if (MouseMode.mouseMode == MouseMode.mouseModes.PLACE_CITY) {
-            GridManager.instance.AddCity(new Vector2Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.z));
-            MouseMode.setMouseMode(MouseMode.mouseModes.DEFAULT);
+        if (GlobalState.instance.mouseMode == mouseModes.PLACE_CITY) {
+
+            PlayerManager.instance.AddCityForPlayer(GlobalState.instance.currentPlayer, new Vector2Int((int)(gameObject.transform.position.x / GridManager.instance.cellWidth), (int)(gameObject.transform.position.z / GridManager.instance.cellWidth)));
         }
-    
+        else if (GlobalState.instance.mouseMode == mouseModes.PLACE_PAWN) {
+            PlayerManager.instance.AddPieceForPlayer(GlobalState.instance.currentPlayer, new Vector2Int((int)(gameObject.transform.position.x / GridManager.instance.cellWidth), (int)(gameObject.transform.position.z / GridManager.instance.cellWidth)),
+                PieceTypes.Pawn);
+        }
+        GlobalState.instance.setMouseMode(mouseModes.DEFAULT);
     }
 
     public void OnMouseOver() {
-        Debug.Log("hovering over tile x:" + gameObject.transform.position.x + " y:" + gameObject.transform.position.z);
-        if (MouseMode.mouseMode == MouseMode.mouseModes.PLACE_CITY && hoverOverCityTile == null) {
+        Debug.Log("mousemode: " + GlobalState.instance.mouseMode);
+        Debug.Log("mouseModes " + mouseModes.PLACE_CITY);
+        if (GlobalState.instance.mouseMode == mouseModes.PLACE_CITY && hoverOverCityTile == null) {
+            Debug.Log("Placing city at: " + (int)gameObject.transform.position.x + ", " + (int)gameObject.transform.position.y);
             hoverOverCityTile = Instantiate(hoverOverCityTilePrefab, gameObject.transform);
+        }
+        else if (GlobalState.instance.mouseMode != mouseModes.PLACE_CITY && hoverOverCityTile != null) {
+            Destroy(hoverOverCityTile);
+            hoverOverCityTile = null;
+        }
+        if (GlobalState.instance.mouseMode == mouseModes.PLACE_PAWN && hoverOverPawn == null) {
+            hoverOverPawn = Instantiate(hoverOverPawnPrefab, gameObject.transform);
+        }
+        else if (GlobalState.instance.mouseMode != mouseModes.PLACE_PAWN && hoverOverPawn != null) {
+            Destroy(hoverOverPawn);
+            hoverOverPawn = null;
         }
     }
 
     public void OnMouseExit() {
-        Debug.Log("Leaving tile x:" + gameObject.transform.position.x + " y:" + gameObject.transform.position.z);
         if (hoverOverCityTile != null) {
             Destroy(hoverOverCityTile);
             hoverOverCityTile = null;
+        }
+        if (hoverOverPawn != null) {
+            Destroy(hoverOverPawn);
+            hoverOverPawn = null;
         }
     }
 }

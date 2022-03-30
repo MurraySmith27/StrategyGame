@@ -1,8 +1,13 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Grid
 {
+
+    private int cityIdGenerator;
+
+    private int pieceIdGenerator;
     public Tile[,] grid { get; private set; }
     public Vector2Int gridSize { get; private set; }
 
@@ -10,7 +15,10 @@ public class Grid
 
     public bool isActive;
 
-    private ArrayList cities;
+    //key: city id value: CityTile Object
+    private Dictionary<int, CityTile> cities;
+
+    private Dictionary<int, Piece> pieces;
 
     public Grid(Vector2Int _gridSize, float _cellWidth) {
 
@@ -18,8 +26,33 @@ public class Grid
         this.cellWidth = _cellWidth;
         this.isActive = false;
 
-        this.cities = new ArrayList();
+        this.cities = new Dictionary<int, CityTile>();
+        this.pieces = new Dictionary<int, Piece>();
         this.grid = new Tile[this.gridSize.x, this.gridSize.y];
+    }
+
+
+    //get the total growth and production of all owned tiles for city with cityId 
+    //  return: (growth, production)
+    public (int, int) GetCityGrowthAndProd(int cityId) {
+        CityTile city;
+        
+        if (this.cities.ContainsKey(cityId) && (city = this.cities[cityId]) != null) {
+            int totalGrowth = 0;
+            int totalProd = 0;
+            for (int x = 0; x < this.gridSize.x; x++) {
+                for (int y = 0; y < this.gridSize.y; y++) {
+                    if (city.ownedTiles[x,y] && this.GetTileAt(x, y) is ResourceTile) {
+                        totalGrowth += (this.GetTileAt(x, y) as ResourceTile).growthPerTurn;
+                        totalProd += (this.GetTileAt(x, y) as ResourceTile).productionPerTurn;
+                    }
+                }   
+            }
+            return (totalGrowth, totalProd);
+        }
+        else {
+            return (-1, -1);
+        }
     }
 
     //populates the entire grid with random resource tiles
@@ -40,23 +73,15 @@ public class Grid
                         numProductionPerTurn++;
                     }
                 }
-
-                Debug.Log("node [" + i + ", " + j + "] growth: " + numGrowthPerTurn + " production: " + numProductionPerTurn);
-                Vector3 worldPos = new Vector3(this.cellWidth * i + this.cellWidth / 2f, 0, this.cellWidth * j + this.cellWidth / 2f);
-                this.grid[i,j] = new ResourceTile(worldPos, new Vector2Int(i,j), numGrowthPerTurn, numProductionPerTurn);
+                this.grid[i,j] = new ResourceTile(new Vector2Int(i,j), numGrowthPerTurn, numProductionPerTurn);
             }
         }
     }
 
-    //adds a city to the board at the specified location. if a city cannot be built on this tile, return false and do not add the city.
-    public bool AddCity(Vector2Int position) {
-
-        Debug.Log("Adding city at " + position.x + ", " + position.y);
-        Vector3 worldPos = new Vector3(this.cellWidth * position.x + this.cellWidth / 2f, 0, this.cellWidth * position.y + this.cellWidth / 2f);
-
+    public bool CanPlaceCity(Vector2Int position) {
 
         //return false if x is by a corner
-        if (position.x < 1 || position.y < 1 || position.x > this.gridSize.x - 1 || position.y > this.gridSize.y - 1) {
+        if (position.x < 1 || position.y < 1 || position.x >= this.gridSize.x - 1 || position.y >= this.gridSize.y - 1) {
             return false;
         }
 
@@ -81,12 +106,55 @@ public class Grid
             }
         }
 
-        CityTile city = new CityTile(worldPos, this.gridSize, position);
+        return true;
+    }
 
-        this.cities.Add(city);
+    public bool CanPlacePieceAt(Vector2Int position, PieceTypes type) {
+
+        //return false if x is by a corner
+        if (position.x < 1 || position.y < 1 || position.x >= this.gridSize.x - 1 || position.y >= this.gridSize.y - 1) {
+            return false;
+        }
+
+        Piece piece = getPieceAt(position.x, position.y);
+        return this.grid[position.x, position.y] is ResourceTile && piece == null;
+    }
+
+    public int AddPiece(Vector2Int position, PieceTypes type) {
+        int newPieceId = pieceIdGenerator++;
+        switch (type) {
+            case PieceTypes.Pawn:
+                this.pieces[newPieceId] = new Pawn(position, newPieceId);
+                break;
+        }
+
+        return newPieceId;
+    }
+
+
+    public Tile GetTileAt(int x, int y) {
+        return this.grid[x, y];
+    }
+
+    public Piece getPieceAt(int x, int y) {
+        for (int i = 0; i < pieceIdGenerator; i++) {
+            if (this.pieces[i].gridIndex.x == x && this.pieces[i].gridIndex.y == y) {
+                return this.pieces[i];
+            }
+        }
+        return null;
+    }
+
+    //adds a city to the board at the specified location. if a city cannot be built on this tile, return false and do not add the city.
+    public int AddCity(Vector2Int position) {
+
+        int newCityId = this.cityIdGenerator++;
+        CityTile city = new CityTile(this.gridSize, position, newCityId);
+
+        this.cities[newCityId] = city;
 
         this.grid[position.x, position.y] = city;
-        return true;
+        return newCityId;
     }
 
     public void CreateGrid() {

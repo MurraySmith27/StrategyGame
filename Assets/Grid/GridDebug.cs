@@ -31,7 +31,7 @@ public class GridDebug : MonoBehaviour
 
         for (int x = 0; x < this.grid.gridSize.x; x++) {
             for (int y = 0; y < this.grid.gridSize.y; y++) {
-                Gizmos.DrawWireCube(this.grid.grid[x, y].worldPos, wireBoxSize);
+                
             }
         }
         
