@@ -122,11 +122,8 @@ public class Grid
 
     public int AddPiece(Vector2Int position, PieceTypes type) {
         int newPieceId = pieceIdGenerator++;
-        switch (type) {
-            case PieceTypes.Pawn:
-                this.pieces[newPieceId] = new Pawn(position, newPieceId);
-                break;
-        }
+        
+        this.pieces[newPieceId] = PieceFactory.create(type);
 
         return newPieceId;
     }

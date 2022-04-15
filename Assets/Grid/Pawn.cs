@@ -8,4 +8,8 @@ public class Pawn : Piece {
     }
 
 
+    public override Array<(int, int)> getMovements() {
+
+    }
+
 }

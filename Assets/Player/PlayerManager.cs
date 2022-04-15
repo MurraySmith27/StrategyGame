@@ -25,11 +25,10 @@ public class PlayerManager : MonoBehaviour
 
     //private Dictionary<int, City> cities;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Awake() {
         if (!instance)
-            instance = this;        
+            instance = this;  
+        
         playerToCities = new Dictionary<int, ArrayList>();
         playerToPieces = new Dictionary<int, ArrayList>();
         playerToGrowth = new Dictionary<int, int>();
@@ -51,11 +50,11 @@ public class PlayerManager : MonoBehaviour
 
 
     public bool CanPlaceCity(int playerIndex) {
-        return playerToProduction[playerIndex] > GameConstants.cityCost;
+        return playerToProduction[playerIndex] >= GameConstants.cityCost;
     }
 
     public bool CanPlacePiece(int playerIndex) {
-        return playerToProduction[playerIndex] > GameConstants.pawnCost;
+        return playerToProduction[playerIndex] >= GameConstants.pawnCost;
     }
 
     public void AddCityForPlayer(int playerIndex, Vector2Int position) {
@@ -114,6 +113,13 @@ public class PlayerManager : MonoBehaviour
                 playerToProduction[playerId] += prodIncrement;
             }
         }
+    }
+
+    public int getPlayerGrowth(int playerIndex) {
+        return this.playerToGrowth[playerIndex];
+    }
+    public int getPlayerProduction(int playerIndex) {
+        return this.playerToProduction[playerIndex];
     }
 
     public int getNumPlayers() {
