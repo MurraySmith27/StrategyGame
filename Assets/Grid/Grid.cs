@@ -123,8 +123,8 @@ public class Grid
     public int AddPiece(Vector2Int position, PieceTypes type) {
         int newPieceId = pieceIdGenerator++;
         
-        this.pieces[newPieceId] = PieceFactory.create(type);
-
+        this.pieces[newPieceId] = PieceFactory.create(type, position, newPieceId);;
+        
         return newPieceId;
     }
 

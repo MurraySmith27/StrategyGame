@@ -1,5 +1,6 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-
 public class Piece {
 
     public Vector2Int gridIndex;
@@ -9,6 +10,9 @@ public class Piece {
     }
 
 
-    public virtual (int, int) getMovementPaths;
+    public virtual (int, int)[] getMovements() {
+        (int, int)[] movements = {};
+        return movements;
+    }
 
 }

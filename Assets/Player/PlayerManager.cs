@@ -65,7 +65,7 @@ public class PlayerManager : MonoBehaviour
                 playerToCities[playerIndex].Add(newCityId);
             }
             else {
-                Debug.LogError("Tried to place a city in an invalid place! player: " + playerIndex + " position: " + position);
+                Debug.LogError("Tried to place a city in an invalid place, but grid flagged it as valid! player: " + playerIndex + " position: " + position);
                 Debug.Break();
             }
         };
@@ -82,23 +82,35 @@ public class PlayerManager : MonoBehaviour
                 playerToProduction[playerIndex] -= GameConstants.cityCost;
                 addCity();
             }
-
+            else {
+                PopupMessage.CreatePopupMessage(
+                    "Nope!", 
+                    $"Not enough production to place a city! A city requires {GameConstants.cityCost} production."
+                );
+            }
         }
     }
 
     public void AddPieceForPlayer(int playerIndex, Vector2Int position, PieceTypes type) {
         
-        if (this.CanPlacePiece(playerIndex) && GridManager.instance.CanPlacePieceAt(position, type)) {
+        if (GridManager.instance.CanPlacePieceAt(position, type)) {
+            if (this.CanPlacePiece(playerIndex)) {
+                playerToProduction[playerIndex] -= GameConstants.pawnCost;
 
-            playerToProduction[playerIndex] -= GameConstants.pawnCost;
-
-            int newPieceId = GridManager.instance.AddPiece(position, type);
-            if (newPieceId != -1) {
-                playerToPieces[playerIndex].Add(newPieceId);
+                int newPieceId = GridManager.instance.AddPiece(position, type);
+                if (newPieceId != -1) {
+                    playerToPieces[playerIndex].Add(newPieceId);
+                }
+                else {
+                    Debug.LogError("Tried to place a piece in an invalid place, but grid flagged it as valid! player: " + playerIndex + " position: " + position + " piece type: " + type);
+                    Debug.Break();
+                }
             }
             else {
-                Debug.LogError("Tried to place a piece in an invalid place! player: " + playerIndex + " position: " + position + " piece type: " + type);
-                Debug.Break();
+                PopupMessage.CreatePopupMessage(
+                    "Nope!", 
+                    $"Not enough production to place a {type.ToString()}! A {type.ToString()} requires {GameConstants.getCostFromPiece(type)} production."
+                );
             }
         }
     }

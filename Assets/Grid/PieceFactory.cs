@@ -1,14 +1,13 @@
-
+using UnityEngine;
 
 public class PieceFactory {
 
-    public static Piece create(string type) {
+    public static Piece create(PieceTypes type, Vector2Int position, int newPieceId) {
         switch (type) {
             case PieceTypes.Pawn:
                 return new Pawn(position, newPieceId);
-                break;
             default: 
-                break;
+                return new Piece(position);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public enum PieceTypes {
-    Pawn
+    Pawn,
 }
 
 public class GridManager : MonoBehaviour

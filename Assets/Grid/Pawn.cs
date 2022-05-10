@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 public class Pawn : Piece {
 
@@ -8,8 +11,9 @@ public class Pawn : Piece {
     }
 
 
-    public override Array<(int, int)> getMovements() {
-
+    public override (int, int)[] getMovements() {
+        (int, int)[] movements = {};
+        return movements;
     }
 
 }

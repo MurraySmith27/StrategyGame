@@ -25,7 +25,7 @@ public class GlobalState : MonoBehaviour
             instance = this;
 
         mouseMode = mouseModes.DEFAULT;
-        currentPlayer = currentPlayer;
+        
     }
 
     public void Start() {
