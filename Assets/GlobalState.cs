@@ -19,6 +19,8 @@ public class GlobalState : MonoBehaviour
 
     public static GlobalState instance;
 
+    public Color[] playerColors = new Color[1];
+
 
     public void Awake() {
         if (!instance)

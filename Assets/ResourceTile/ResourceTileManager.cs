@@ -116,8 +116,6 @@ public class ResourceTileManager : MonoBehaviour
     }
 
     public void OnMouseOver() {
-        Debug.Log("mousemode: " + GlobalState.instance.mouseMode);
-        Debug.Log("mouseModes " + mouseModes.PLACE_CITY);
         if (GlobalState.instance.mouseMode == mouseModes.PLACE_CITY && hoverOverCityTile == null) {
             Debug.Log("Placing city at: " + (int)gameObject.transform.position.x + ", " + (int)gameObject.transform.position.y);
             hoverOverCityTile = Instantiate(hoverOverCityTilePrefab, gameObject.transform);

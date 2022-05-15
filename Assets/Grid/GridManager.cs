@@ -90,13 +90,15 @@ public class GridManager : MonoBehaviour
         this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetGrowth", (this.grid.GetTileAt(x,y) as ResourceTile).growthPerTurn);
         this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetProduction", (this.grid.GetTileAt(x,y) as ResourceTile).productionPerTurn);
     }
-    public void InstantiateCityPrefab(int x, int y) {
+    public void InstantiateCityPrefab(int x, int y, int player) {
         this.instantiatedGridPrefabs[x, y] = Instantiate(cityTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
         //go through all owned city tiles and instantiate the border prefab.
         for (int x2 = 0; x2 < this.grid.gridSize.x; x2++){
             for (int y2 = 0; y2 < this.grid.gridSize.y; y2++){
                 if (this.grid.GetTileAt(x,y) is CityTile && (this.grid.GetTileAt(x, y) as CityTile).ownedTiles[x2, y2]) {
-                    this.borderPrefabs.Add(Instantiate(borderPrefab, new Vector3(this.cellWidth * x2 + this.cellWidth / 2f, 0, this.cellWidth * y2 + this.cellWidth / 2f), Quaternion.identity, gameObject.transform));
+                    GameObject newBorder = Instantiate(borderPrefab, new Vector3(this.cellWidth * x2 + this.cellWidth / 2f, 0, this.cellWidth * y2 + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+                    newBorder.GetComponent<CityBorder>().AddPlayerColor(player);
+                    this.borderPrefabs.Add(newBorder);
                 }
             }
         }
@@ -130,11 +132,17 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < this.grid.gridSize.x; x++){
             for (int y = 0; y < this.grid.gridSize.y; y++) {
                 if (this.grid.GetTileAt(x, y) is ResourceTile) {
-                    InstantiateResourcePrefab(x,y);
+                    InstantiateResourcePrefab(x, y);
                     
                 }
                 else if (this.grid.GetTileAt(x, y) is CityTile) {
-                    InstantiateCityPrefab(x,y);
+                    int playerId = PlayerManager.instance.getPlayerFromCityId(((CityTile)this.grid.GetTileAt(x, y)).id);
+                    if (playerId != -1) {
+                        InstantiateCityPrefab(x, y, playerId);
+                    }
+                    else {
+                        Debug.LogError("Trying to find a player id for a city that is not registered with PlayerManager from GridManager.");
+                    }
                 }
             }
         }
@@ -154,7 +162,13 @@ public class GridManager : MonoBehaviour
                     InstantiateResourcePrefab(x,y);
                 }
                 else if (this.grid.GetTileAt(x, y) is CityTile) {
-                    InstantiateCityPrefab(x, y);
+                    int playerId = PlayerManager.instance.getPlayerFromCityId(((CityTile)this.grid.GetTileAt(x, y)).id);
+                    if (playerId != -1) {
+                        InstantiateCityPrefab(x, y, playerId);
+                    }
+                    else {
+                        Debug.LogError("Trying to find a player id for a city that is not registered with PlayerManager from GridManager.");
+                    }
                 }
 
                 //then, update piece prefabs

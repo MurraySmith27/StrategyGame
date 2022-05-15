@@ -527,8 +527,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1094937183}
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 977922040}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1383,6 +1383,7 @@ Transform:
   - {fileID: 715865007}
   - {fileID: 520352445}
   - {fileID: 1452003649}
+  - {fileID: 56454174}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1400,6 +1401,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPlayer: 0
   mouseMode: 0
+  playerColors:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0.18282604, b: 1, a: 0}
 --- !u!1 &1061238067
 GameObject:
   m_ObjectHideFlags: 0

@@ -57,6 +57,15 @@ public class PlayerManager : MonoBehaviour
         return playerToProduction[playerIndex] >= GameConstants.pawnCost;
     }
 
+    public int getPlayerFromCityId(int cityId) {
+        for (int playerId = 0; playerId < numPlayers; playerId++) {
+            if (playerToCities[playerId].IndexOf(cityId) != -1) {
+                return playerId;
+            }
+        }
+        return -1;
+    }
+
     public void AddCityForPlayer(int playerIndex, Vector2Int position) {
 
         Action addCity = () => {
