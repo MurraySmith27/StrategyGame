@@ -5,14 +5,15 @@ public class Piece {
 
     public Vector2Int gridIndex;
 
-    public Piece(Vector2Int _gridIndex) {
+    public List<Vector2Int> movementVector;
+
+    public int id;
+
+    public Piece(Vector2Int _gridIndex, int _id) {
         this.gridIndex = _gridIndex;
-    }
+        this.id = _id;
 
-
-    public virtual (int, int)[] getMovements() {
-        (int, int)[] movements = {};
-        return movements;
+        this.movementVector = new List<Vector2Int>();
     }
 
 }

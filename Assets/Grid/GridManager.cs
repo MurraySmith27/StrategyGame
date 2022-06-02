@@ -73,6 +73,62 @@ public class GridManager : MonoBehaviour
         return newPieceId;
     }
 
+    public Piece GetPieceFromId(int pieceId) {
+
+        for (int x = 0; x < this.gridSize.x; x++) {
+            for (int y = 0; y < this.gridSize.y; y++) {
+                Piece pieceAt = this.grid.getPieceAt(x, y);
+                if (pieceAt != null && pieceAt.id == pieceId) {
+                    return pieceAt;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public Vector2Int GetPiecePositionFromId(int pieceId) {
+
+        for (int x = 0; x < this.gridSize.x; x++) {
+            for (int y = 0; y < this.gridSize.y; y++) {
+                Piece pieceAt = this.grid.getPieceAt(x, y);
+                if (pieceAt != null && pieceAt.id == pieceId) {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+
+        return new Vector2Int();
+    }
+
+    public CityTile GetCityTileFromId(int cityId) {
+
+        for (int x = 0; x < this.gridSize.x; x++) {
+            for (int y = 0; y < this.gridSize.y; y++) {
+                Tile tileAt = this.grid.GetTileAt(x, y);
+                if (tileAt != null && tileAt is CityTile && ((CityTile)tileAt).id == cityId) {
+                    return (CityTile)tileAt;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public Vector2Int GetCityTilePositionFromId(int cityId) {
+
+        for (int x = 0; x < this.gridSize.x; x++) {
+            for (int y = 0; y < this.gridSize.y; y++) {
+                Tile tileAt = this.grid.GetTileAt(x, y);
+                if (tileAt != null && tileAt is CityTile && ((CityTile)tileAt).id == cityId) {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+
+        return new Vector2Int();
+    }
+
     //---- End GridManager API functions ----
 
     void Awake() {
@@ -90,8 +146,12 @@ public class GridManager : MonoBehaviour
         this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetGrowth", (this.grid.GetTileAt(x,y) as ResourceTile).growthPerTurn);
         this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetProduction", (this.grid.GetTileAt(x,y) as ResourceTile).productionPerTurn);
     }
-    public void InstantiateCityPrefab(int x, int y, int player) {
-        this.instantiatedGridPrefabs[x, y] = Instantiate(cityTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+
+    public void InstantiateCityPrefab(int x, int y, int player, int cityId) {
+        GameObject instantiatedCity = Instantiate(cityTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+        instantiatedCity.GetComponent<SelectionAnchor>().objectId = cityId;
+        this.instantiatedGridPrefabs[x, y] = instantiatedCity;
+
         //go through all owned city tiles and instantiate the border prefab.
         for (int x2 = 0; x2 < this.grid.gridSize.x; x2++){
             for (int y2 = 0; y2 < this.grid.gridSize.y; y2++){
@@ -104,9 +164,13 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void InstantiatePawnPrefab(int x, int y) {
-        this.instantiatedPiecePrefabs[x, y] = Instantiate(pawnPrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, 
+    public void InstantiatePawnPrefab(int x, int y, int pawnId) {
+        GameObject instantiatedPawn = Instantiate(pawnPrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, 
                                                           this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+
+        instantiatedPawn.GetComponent<SelectionAnchor>().objectId = pawnId;
+
+        this.instantiatedPiecePrefabs[x, y] = instantiatedPawn;
     }
 
     /**
@@ -131,14 +195,15 @@ public class GridManager : MonoBehaviour
         this.instantiatedGridPrefabs = new GameObject[this.grid.gridSize.x, this.grid.gridSize.y];
         for (int x = 0; x < this.grid.gridSize.x; x++){
             for (int y = 0; y < this.grid.gridSize.y; y++) {
-                if (this.grid.GetTileAt(x, y) is ResourceTile) {
+                Tile tile = this.grid.GetTileAt(x, y);
+                if (tile is ResourceTile) {
                     InstantiateResourcePrefab(x, y);
                     
                 }
-                else if (this.grid.GetTileAt(x, y) is CityTile) {
-                    int playerId = PlayerManager.instance.getPlayerFromCityId(((CityTile)this.grid.GetTileAt(x, y)).id);
+                else if (tile is CityTile) {
+                    int playerId = PlayerManager.instance.getPlayerFromCityId(((CityTile)tile).id);
                     if (playerId != -1) {
-                        InstantiateCityPrefab(x, y, playerId);
+                        InstantiateCityPrefab(x, y, playerId, ((CityTile)tile).id);
                     }
                     else {
                         Debug.LogError("Trying to find a player id for a city that is not registered with PlayerManager from GridManager.");
@@ -158,13 +223,14 @@ public class GridManager : MonoBehaviour
                 //remove existing tiles
                 //First, update tile prefabs
                 Destroy(this.instantiatedGridPrefabs[x, y]);
-                if (this.grid.GetTileAt(x, y) is ResourceTile) {
+                Tile tile = this.grid.GetTileAt(x, y);
+                if (tile is ResourceTile) {
                     InstantiateResourcePrefab(x,y);
                 }
-                else if (this.grid.GetTileAt(x, y) is CityTile) {
-                    int playerId = PlayerManager.instance.getPlayerFromCityId(((CityTile)this.grid.GetTileAt(x, y)).id);
+                else if (tile is CityTile) {
+                    int playerId = PlayerManager.instance.getPlayerFromCityId(((CityTile)tile).id);
                     if (playerId != -1) {
-                        InstantiateCityPrefab(x, y, playerId);
+                        InstantiateCityPrefab(x, y, playerId, ((CityTile)tile).id);
                     }
                     else {
                         Debug.LogError("Trying to find a player id for a city that is not registered with PlayerManager from GridManager.");
@@ -176,7 +242,7 @@ public class GridManager : MonoBehaviour
                 Piece currentPiece = null;
                 if ((currentPiece = this.grid.getPieceAt(x, y)) != null) {
                     if (currentPiece is Pawn) {
-                        InstantiatePawnPrefab(x, y);
+                        InstantiatePawnPrefab(x, y, currentPiece.id);
                     }
                 }
             }

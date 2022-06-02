@@ -7,7 +7,7 @@ public class PieceFactory {
             case PieceTypes.Pawn:
                 return new Pawn(position, newPieceId);
             default: 
-                return new Piece(position);
+                return new Piece(position, newPieceId);
         }
     }
 }

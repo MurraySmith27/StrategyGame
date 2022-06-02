@@ -5,9 +5,10 @@ using System.Collections.Generic;
 public class Grid
 {
 
-    private int cityIdGenerator;
+    private int idGenerator;
 
-    private int pieceIdGenerator;
+    private int numPieces;
+
     public Tile[,] grid { get; private set; }
     public Vector2Int gridSize { get; private set; }
 
@@ -96,10 +97,10 @@ public class Grid
         }
 
         //check if we're overlapping borders with a city.
-        for (int i = 0; i < this.cities.Count; i++) {
+        foreach (KeyValuePair<int, CityTile> keyValuePair in this.cities) {
             for (int x = position.x - 1; x < position.x + 2; x++) {
                 for (int y = position.y - 1; y < position.y + 2; y++) {
-                    if ((this.cities[i] as CityTile).ownedTiles[x, y]) {
+                    if ((keyValuePair.Value as CityTile).ownedTiles[x, y]) {
                         return false;
                     }
                 }
@@ -121,7 +122,9 @@ public class Grid
     }
 
     public int AddPiece(Vector2Int position, PieceTypes type) {
-        int newPieceId = pieceIdGenerator++;
+        int newPieceId = this.idGenerator++;
+
+        this.numPieces++;
         
         this.pieces[newPieceId] = PieceFactory.create(type, position, newPieceId);;
         
@@ -134,9 +137,9 @@ public class Grid
     }
 
     public Piece getPieceAt(int x, int y) {
-        for (int i = 0; i < pieceIdGenerator; i++) {
-            if (this.pieces[i].gridIndex.x == x && this.pieces[i].gridIndex.y == y) {
-                return this.pieces[i];
+        foreach (KeyValuePair<int, Piece> keyValuePair in this.pieces) {
+            if (keyValuePair.Value.gridIndex.x == x && keyValuePair.Value.gridIndex.y == y) {
+                return keyValuePair.Value;
             }
         }
         return null;
@@ -145,7 +148,7 @@ public class Grid
     //adds a city to the board at the specified location. if a city cannot be built on this tile, return false and do not add the city.
     public int AddCity(Vector2Int position) {
 
-        int newCityId = this.cityIdGenerator++;
+        int newCityId = this.idGenerator++;
         CityTile city = new CityTile(this.gridSize, position, newCityId);
 
         this.cities[newCityId] = city;
