@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -715,6 +715,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomRate: 1
+--- !u!1 &518037983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 518037984}
+  - component: {fileID: 518037985}
+  m_Layer: 0
+  m_Name: SelectionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &518037984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518037983}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12.470805, y: -24.279701, z: 25.21428}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 977922040}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &518037985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518037983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88cddd97df5a4f1d815b80399b2e3c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potentialMovePrefab: {fileID: 8362554628548642820, guid: f12d7c8ea89cc41428cac76b317994af, type: 3}
 --- !u!1 &520352443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,7 +1373,7 @@ MonoBehaviour:
   resourceTilePrefab: {fileID: 8764817572500319056, guid: 08fe4836be89b6440b3c38e76213d312, type: 3}
   cityTilePrefab: {fileID: 6518567043423253730, guid: 9abb32a47e2c7e04daf1767ea94ec91a, type: 3}
   borderPrefab: {fileID: 5342407021158059237, guid: 6b9068db25d64e04cb3012f138911a0f, type: 3}
-  pawnPrefab: {fileID: 1867195236767680, guid: b1d95c04dd54e434aa65855a0f77d30f, type: 3}
+  pawnPrefab: {fileID: 1006356879557798, guid: 7058bf188079741c2a507045f997f696, type: 3}
   averageResourceCount: 2
 --- !u!4 &956416069
 Transform:
@@ -1384,6 +1429,7 @@ Transform:
   - {fileID: 520352445}
   - {fileID: 1452003649}
   - {fileID: 56454174}
+  - {fileID: 518037984}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
