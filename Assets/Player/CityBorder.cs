@@ -12,8 +12,6 @@ public class CityBorder : MonoBehaviour
         //create a new material with the specified color and apply it to all child objects.
         if (borderMaterial) {
             Material newMaterial = new Material(borderMaterial);
-            Debug.Log("Adding material to border");
-
             //this relies on the fact that all cities created during a players turn belong to that player.
             newMaterial.color = GlobalState.instance.playerColors[playerNum];
             foreach(Transform childTransform in gameObject.transform) {
@@ -21,7 +19,7 @@ public class CityBorder : MonoBehaviour
             }
         }
         else {
-            Debug.Log("Warning: No material attached to BorderInit script! The city border will have no material.");
+            Debug.LogError("No material attached to BorderInit script! The city border will have no material.");
         }
     }
 }

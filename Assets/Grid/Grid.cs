@@ -90,7 +90,6 @@ public class Grid
         for (int x = position.x - 1; x < position.x + 2; x++) {
             for (int y = position.y - 1; y < position.y + 2; y++) {
                 if (!(this.grid[x, y] is ResourceTile) || this.grid[x, y] is CityTile) {
-                    Debug.Log("invalid city placement!");
                     return false;
                 }
             }
@@ -131,9 +130,19 @@ public class Grid
         return newPieceId;
     }
 
+    public void MovePiece(int pieceId, Vector2Int positionToMoveTo) {
+        if (this.pieces.ContainsKey(pieceId)) {
+            this.pieces[pieceId].gridIndex = positionToMoveTo;
+        }
+    }
 
     public Tile GetTileAt(int x, int y) {
-        return this.grid[x, y];
+        if (x < 0 || this.gridSize.x <= x || y < 0 || this.gridSize.y <= y) {
+            return null;
+        }
+        else {
+            return this.grid[x, y];
+        }
     }
 
     public Piece getPieceAt(int x, int y) {

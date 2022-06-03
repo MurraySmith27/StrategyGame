@@ -32,7 +32,6 @@ public class SelectionManager : MonoBehaviour {
     public void SelectObject(int objectId) {
 
         this.selectedThisFrame = true;
-        Debug.Log($"Selecting object with id: {objectId}");
 
         this.DeselectAll();
 
@@ -45,18 +44,29 @@ public class SelectionManager : MonoBehaviour {
             float cellWidth = GridManager.instance.cellWidth;
 
             foreach (Vector2Int movement in piece.movementVector) {
-                instantiatedPotentialMovePrefabs.Add(
-                    Instantiate(
-                        potentialMovePrefab, 
-                        new Vector3(
-                            cellWidth * (piecePos.x + movement.x) + cellWidth / 2f, 
-                            0, 
-                            cellWidth * (piecePos.y + movement.y) + cellWidth / 2f
-                        ), 
-                        Quaternion.identity, 
-                        gameObject.transform
-                    )
+                
+                //Don't show the move marker if it's an invalid move.
+                if (!GridManager.instance.CanMovePieceTo(piece.id, piecePos + movement)) {
+                    continue;
+                }
+
+                GameObject potentialMoveMarker = Instantiate(
+                    potentialMovePrefab, 
+                    new Vector3(
+                        cellWidth * (piecePos.x + movement.x) + cellWidth / 2f, 
+                        0, 
+                        cellWidth * (piecePos.y + movement.y) + cellWidth / 2f
+                    ), 
+                    Quaternion.identity, 
+                    gameObject.transform
                 );
+
+                PotentialMoveMarker moveMarkerComponent = potentialMoveMarker.GetComponent<PotentialMoveMarker>();
+
+                moveMarkerComponent.position = piecePos + movement;
+                moveMarkerComponent.underlyingPieceId = piece.id;
+
+                instantiatedPotentialMovePrefabs.Add(potentialMoveMarker);
             }
         }
         

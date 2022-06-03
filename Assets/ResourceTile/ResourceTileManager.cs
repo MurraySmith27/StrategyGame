@@ -65,7 +65,7 @@ public class ResourceTileManager : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("tried to instantiate resource tile with more than 5 growth.");
+                Debug.LogError("tried to instantiate resource tile with more than 5 growth.");
                 break;   
         }
     }
@@ -98,7 +98,7 @@ public class ResourceTileManager : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("tried to instantiate resource tile with more than 5 production.");
+                Debug.LogError("tried to instantiate resource tile with more than 5 production.");
                 break;   
         }
     }
@@ -117,7 +117,6 @@ public class ResourceTileManager : MonoBehaviour
 
     public void OnMouseOver() {
         if (GlobalState.instance.mouseMode == mouseModes.PLACE_CITY && hoverOverCityTile == null) {
-            Debug.Log("Placing city at: " + (int)gameObject.transform.position.x + ", " + (int)gameObject.transform.position.y);
             hoverOverCityTile = Instantiate(hoverOverCityTilePrefab, gameObject.transform);
         }
         else if (GlobalState.instance.mouseMode != mouseModes.PLACE_CITY && hoverOverCityTile != null) {

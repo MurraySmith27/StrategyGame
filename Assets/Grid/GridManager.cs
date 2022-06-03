@@ -73,6 +73,21 @@ public class GridManager : MonoBehaviour
         return newPieceId;
     }
 
+    public bool CanMovePieceTo(int pieceId, Vector2Int positionToMoveTo) {
+        Tile tile = this.grid.GetTileAt(positionToMoveTo.x, positionToMoveTo.y);
+
+        return tile != null && !(tile is CityTile);
+    }
+
+    public void MovePiece(int pieceId, Vector2Int positionToMoveTo) {
+        if (!CanMovePieceTo(pieceId, positionToMoveTo)) {
+            return;
+        }
+
+        this.grid.MovePiece(pieceId, positionToMoveTo);
+        this.gridChanged = true;
+    }
+
     public Piece GetPieceFromId(int pieceId) {
 
         for (int x = 0; x < this.gridSize.x; x++) {
