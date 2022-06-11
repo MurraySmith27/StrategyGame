@@ -7,8 +7,8 @@ public class Pawn : Piece {
 
     public int direction = 0; //0: north, 1: east, 2: south, 3: west
 
-    public Pawn(Vector2Int _gridIndex, int _id): base(_gridIndex, _id) {
-        
+    public Pawn(Vector2Int _gridIndex, int _id, int _direction): base(_gridIndex, _id) {
+        this.direction = _direction;
         if (this.movementVector == null)
             this.movementVector = new List<Vector2Int>();
 

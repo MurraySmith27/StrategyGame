@@ -120,12 +120,12 @@ public class Grid
         return this.grid[position.x, position.y] is ResourceTile && piece == null;
     }
 
-    public int AddPiece(Vector2Int position, PieceTypes type) {
+    public int AddPiece(Vector2Int position, PieceTypes type, int pawnDirection = -1) {
         int newPieceId = this.idGenerator++;
 
         this.numPieces++;
         
-        this.pieces[newPieceId] = PieceFactory.create(type, position, newPieceId);;
+        this.pieces[newPieceId] = PieceFactory.create(type, position, newPieceId, pawnDirection: pawnDirection);;
         
         return newPieceId;
     }

@@ -6,9 +6,9 @@ using UnityEngine;
 public enum mouseModes {
     DEFAULT,
     PLACE_CITY,
-    PLACE_PAWN
+    PLACE_PAWN,
+    CHOOSE_PAWN_DIRECTION
 }
-
 
 public class GlobalState : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class GlobalState : MonoBehaviour
 
     public Color[] playerColors = new Color[1];
 
+    public Vector2 pawnToPlacePosition = new Vector2(-1f, -1f);
 
     public void Awake() {
         if (!instance)

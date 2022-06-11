@@ -53,7 +53,7 @@ public class PlayerManager : MonoBehaviour
         return playerToProduction[playerIndex] >= GameConstants.cityCost;
     }
 
-    public bool CanPlacePiece(int playerIndex) {
+    public bool CanPlacePawn(int playerIndex) {
         return playerToProduction[playerIndex] >= GameConstants.pawnCost;
     }
 
@@ -100,13 +100,13 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void AddPieceForPlayer(int playerIndex, Vector2Int position, PieceTypes type) {
+    public void AddPieceForPlayer(int playerIndex, Vector2Int position, PieceTypes type, int pawnDirection = -1) {
         
         if (GridManager.instance.CanPlacePieceAt(position, type)) {
-            if (this.CanPlacePiece(playerIndex)) {
+            if (this.CanPlacePawn(playerIndex)) {
                 playerToProduction[playerIndex] -= GameConstants.pawnCost;
 
-                int newPieceId = GridManager.instance.AddPiece(position, type);
+                int newPieceId = GridManager.instance.AddPiece(position, type, pawnDirection: pawnDirection);
                 if (newPieceId != -1) {
                     playerToPieces[playerIndex].Add(newPieceId);
                 }
@@ -122,6 +122,13 @@ public class PlayerManager : MonoBehaviour
                 );
             }
         }
+        else {
+            PopupMessage.CreatePopupMessage(
+                "Nope!", 
+                $"Invalid location for a {type.ToString()}!"
+            );
+        }
+
     }
 
 

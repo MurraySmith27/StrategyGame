@@ -64,8 +64,8 @@ public class GridManager : MonoBehaviour
     }
 
     //Create a new piece. Return the id of the piece or -1 if the piece could not be created.
-    public int AddPiece(Vector2Int position, PieceTypes type) {
-        int newPieceId = this.grid.AddPiece(position, type);
+    public int AddPiece(Vector2Int position, PieceTypes type, int pawnDirection = -1) {
+        int newPieceId = this.grid.AddPiece(position, type, pawnDirection: pawnDirection);
         
         //trigger an update if successful.
         this.gridChanged = this.gridChanged || newPieceId != -1;
