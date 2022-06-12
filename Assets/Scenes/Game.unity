@@ -760,6 +760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   potentialMovePrefab: {fileID: 8362554628548642820, guid: f12d7c8ea89cc41428cac76b317994af, type: 3}
+  potentialAttackPrefab: {fileID: 8362554628548642820, guid: 494180c6f5dbc4560bf62a5fbd8110aa, type: 3}
 --- !u!1 &520352443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,6 +1451,7 @@ MonoBehaviour:
   playerColors:
   - {r: 1, g: 0, b: 0, a: 0}
   - {r: 0, g: 0.18282604, b: 1, a: 0}
+  pawnToPlacePosition: {x: -1, y: -1}
 --- !u!1 &1061238067
 GameObject:
   m_ObjectHideFlags: 0
