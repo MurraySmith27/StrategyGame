@@ -8,7 +8,15 @@ public class Pawn : Piece {
     public int direction = 0; //0: north, 1: east, 2: south, 3: west
 
     public Pawn(Vector2Int _gridIndex, int _id, int _direction): base(_gridIndex, _id) {
+        
+        this.maxHealth = 1;
+
+        this.currentHealth = 1;
+
+        this.damageOutput = 1;
+        
         this.direction = _direction;
+        
         if (this.movementVector == null)
             this.movementVector = new List<Vector2Int>();
 

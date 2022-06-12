@@ -75,8 +75,92 @@ public class GridManager : MonoBehaviour
 
     public bool CanMovePieceTo(int pieceId, Vector2Int positionToMoveTo) {
         Tile tile = this.grid.GetTileAt(positionToMoveTo.x, positionToMoveTo.y);
+        Piece piece = this.grid.GetPieceAt(positionToMoveTo.x,positionToMoveTo.y);
 
-        return tile != null && !(tile is CityTile);
+        return piece == null && tile != null && !(tile is CityTile);
+    }
+
+    public bool CanPieceAttackAt(int pieceId, Vector2Int positionToAttackAt) {
+        Tile tile = this.grid.GetTileAt(positionToAttackAt.x, positionToAttackAt.y);
+
+        if (tile != null && tile is CityTile) {
+            return true;
+        }
+
+        Piece piece = this.grid.GetPieceAt(positionToAttackAt.x, positionToAttackAt.y);
+
+        if (piece != null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool WillAttackerSurvive(int attackerId, Vector2Int positionToAttackAt) {
+        //attacker should survive if he hits the enemy for their last hit point `
+        Piece attackerPiece = this.GetPieceFromId(attackerId);
+
+        if (attackerPiece != null) {
+            //case 1: defender is a piece
+            Piece defenderPiece = this.grid.GetPieceAt(positionToAttackAt.x, positionToAttackAt.y);
+
+            if (defenderPiece != null) {
+                return true;
+            }
+            else {
+                //case 2: defender is a city
+                Tile defenderTile = this.grid.GetTileAt(positionToAttackAt.x, positionToAttackAt.y);
+                if (defenderTile != null && defenderTile is CityTile) {
+                    CityTile defenderCity = defenderTile as CityTile;
+                    if (defenderCity.currentHealth <= attackerPiece.damageOutput) return true;
+                    else return false;
+                }
+                else {
+                    Debug.LogError($"Could not find a defender at position ({positionToAttackAt.x}, {positionToAttackAt.y})." 
+                                    + " This means that this action was marked as an attack despite not being one.");
+                    Debug.Break();
+                }
+            }
+        }
+        else {
+            Debug.LogError($"Could not find piece with id {attackerId} when calling Piece.WillAttackerSurvive");
+            Debug.Break();
+        }
+
+        return false;
+    }
+
+    public void ProcessAttack(int attackerId, Vector2Int positionToAttackAt) {
+        Piece attackerPiece = this.GetPieceFromId(attackerId);
+
+        if (attackerPiece != null) {
+            //case 1: defender is a piece
+            Piece defenderPiece = this.grid.GetPieceAt(positionToAttackAt.x, positionToAttackAt.y);
+
+            if (defenderPiece != null) {
+                this.DestroyPiece(defenderPiece.id);
+            }
+            else {
+                //case 2: defender is a city
+                Tile defenderTile = this.grid.GetTileAt(positionToAttackAt.x, positionToAttackAt.y);
+                if (defenderTile != null && defenderTile is CityTile) {
+                    CityTile defenderCity = defenderTile as CityTile;
+                    defenderCity.currentHealth -= attackerPiece.damageOutput;
+                    if (defenderCity.currentHealth <= 0) {
+                        this.DestroyCity(defenderCity.id);
+                    }
+                }
+                else {
+                    Debug.LogError($"Could not find a defender at position ({positionToAttackAt.x}, {positionToAttackAt.y})." 
+                                    + " This means that this action was marked as an attack despite not being one.");
+                    Debug.Break();
+                }
+            }
+        }
+        else {
+            Debug.LogError($"Could not find piece with id {attackerId} when calling Piece.WillAttackerSurvive");
+            Debug.Break();
+        }
     }
 
     public void MovePiece(int pieceId, Vector2Int positionToMoveTo) {
@@ -88,11 +172,23 @@ public class GridManager : MonoBehaviour
         this.gridChanged = true;
     }
 
+    public void DestroyPiece(int pieceId) {
+        this.grid.DestroyPiece(pieceId);
+        PlayerManager.instance.RemovePieceForPlayer(pieceId);
+        this.gridChanged = true;
+    }
+
+    public void DestroyCity(int cityId) {
+        this.grid.DestroyCity(cityId);
+        PlayerManager.instance.RemoveCityForPlayer(cityId);
+        this.gridChanged = true;
+    }
+
     public Piece GetPieceFromId(int pieceId) {
 
         for (int x = 0; x < this.gridSize.x; x++) {
             for (int y = 0; y < this.gridSize.y; y++) {
-                Piece pieceAt = this.grid.getPieceAt(x, y);
+                Piece pieceAt = this.grid.GetPieceAt(x, y);
                 if (pieceAt != null && pieceAt.id == pieceId) {
                     return pieceAt;
                 }
@@ -106,7 +202,7 @@ public class GridManager : MonoBehaviour
 
         for (int x = 0; x < this.gridSize.x; x++) {
             for (int y = 0; y < this.gridSize.y; y++) {
-                Piece pieceAt = this.grid.getPieceAt(x, y);
+                Piece pieceAt = this.grid.GetPieceAt(x, y);
                 if (pieceAt != null && pieceAt.id == pieceId) {
                     return new Vector2Int(x, y);
                 }
@@ -255,7 +351,7 @@ public class GridManager : MonoBehaviour
                 //then, update piece prefabs
                 Destroy(this.instantiatedPiecePrefabs[x, y]);
                 Piece currentPiece = null;
-                if ((currentPiece = this.grid.getPieceAt(x, y)) != null) {
+                if ((currentPiece = this.grid.GetPieceAt(x, y)) != null) {
                     if (currentPiece is Pawn) {
                         InstantiatePawnPrefab(x, y, currentPiece.id);
                     }

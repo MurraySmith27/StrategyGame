@@ -116,7 +116,7 @@ public class Grid
             return false;
         }
 
-        Piece piece = getPieceAt(position.x, position.y);
+        Piece piece = GetPieceAt(position.x, position.y);
         return this.grid[position.x, position.y] is ResourceTile && piece == null;
     }
 
@@ -125,9 +125,21 @@ public class Grid
 
         this.numPieces++;
         
-        this.pieces[newPieceId] = PieceFactory.create(type, position, newPieceId, pawnDirection: pawnDirection);;
+        Piece newPiece = PieceFactory.create(type, position, newPieceId, pawnDirection: pawnDirection);;
         
-        return newPieceId;
+        if (newPiece != null) {
+            this.pieces[newPieceId] = newPiece;
+            return newPieceId;
+        }
+        else {
+            Debug.LogError("Tried to instantiate a default Piece from Grid.cs for some reason. Give it a type first.");
+            Debug.Break();
+            return -1;
+        }
+    }
+
+    public void DestroyPiece(int pieceId) {
+        this.pieces.Remove(pieceId);
     }
 
     public void MovePiece(int pieceId, Vector2Int positionToMoveTo) {
@@ -145,7 +157,7 @@ public class Grid
         }
     }
 
-    public Piece getPieceAt(int x, int y) {
+    public Piece GetPieceAt(int x, int y) {
         foreach (KeyValuePair<int, Piece> keyValuePair in this.pieces) {
             if (keyValuePair.Value.gridIndex.x == x && keyValuePair.Value.gridIndex.y == y) {
                 return keyValuePair.Value;
@@ -164,6 +176,10 @@ public class Grid
 
         this.grid[position.x, position.y] = city;
         return newCityId;
+    }
+
+    public void DestroyCity(int cityId) {
+        this.cities.Remove(cityId);
     }
 
     public void CreateGrid() {

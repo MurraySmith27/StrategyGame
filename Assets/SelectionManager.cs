@@ -6,6 +6,8 @@ public class SelectionManager : MonoBehaviour {
 
     public GameObject potentialMovePrefab;
 
+    public GameObject potentialAttackPrefab;
+
     private List<GameObject> instantiatedPotentialMovePrefabs;
 
     public static SelectionManager instance;
@@ -45,28 +47,31 @@ public class SelectionManager : MonoBehaviour {
 
             foreach (Vector2Int movement in piece.movementVector) {
                 
+                bool canMoveAt = GridManager.instance.CanMovePieceTo(piece.id, piecePos + movement);
+                bool canAttackAt = GridManager.instance.CanPieceAttackAt(piece.id, piecePos + movement);
+
                 //Don't show the move marker if it's an invalid move.
-                if (!GridManager.instance.CanMovePieceTo(piece.id, piecePos + movement)) {
+                if (!canMoveAt && !canAttackAt) {
                     continue;
                 }
 
-                GameObject potentialMoveMarker = Instantiate(
-                    potentialMovePrefab, 
-                    new Vector3(
-                        cellWidth * (piecePos.x + movement.x) + cellWidth / 2f, 
-                        0, 
-                        cellWidth * (piecePos.y + movement.y) + cellWidth / 2f
-                    ), 
-                    Quaternion.identity, 
-                    gameObject.transform
-                );
+                GameObject pieceActionMarkerGO = Instantiate(
+                        canMoveAt ? potentialMovePrefab : canAttackAt ? potentialAttackPrefab : null,
+                        new Vector3(
+                            cellWidth * (piecePos.x + movement.x) + cellWidth / 2f,
+                            0,
+                            cellWidth * (piecePos.y + movement.y) + cellWidth / 2f
+                        ),
+                        Quaternion.identity,
+                        gameObject.transform
+                    );
 
-                PotentialMoveMarker moveMarkerComponent = potentialMoveMarker.GetComponent<PotentialMoveMarker>();
+                PieceActionMarker pieceActionMarker = pieceActionMarkerGO.GetComponent<PieceActionMarker>();
 
-                moveMarkerComponent.position = piecePos + movement;
-                moveMarkerComponent.underlyingPieceId = piece.id;
+                pieceActionMarker.position = piecePos + movement;
+                pieceActionMarker.underlyingPieceId = piece.id;
 
-                instantiatedPotentialMovePrefabs.Add(potentialMoveMarker);
+                instantiatedPotentialMovePrefabs.Add(pieceActionMarkerGO);
             }
         }
         
@@ -78,9 +83,14 @@ public class SelectionManager : MonoBehaviour {
 
     public void Update() {
 
-        if (Input.GetMouseButtonDown(0) && !selectedThisFrame) {
+        if (GlobalState.instance.mouseMode != mouseModes.SELECTING) {
             this.DeselectAll();
         }
+        else if (Input.GetMouseButtonDown(0) && !selectedThisFrame) {
+            this.DeselectAll();
+            GlobalState.instance.setMouseMode(mouseModes.DEFAULT);
+        }
+        
 
         this.selectedThisFrame = false;
     }

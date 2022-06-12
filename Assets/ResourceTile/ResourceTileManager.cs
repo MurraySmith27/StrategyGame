@@ -53,10 +53,6 @@ public class ResourceTileManager : MonoBehaviour
         if (GlobalState.instance.mouseMode == mouseModes.DEFAULT) {
             DestroyAllPrefabs();
         }
-
-        if (Input.GetMouseButtonDown(1)) {
-            GlobalState.instance.setMouseMode(mouseModes.DEFAULT);
-        }
     }
 
     public void SetGrowth(int numGrowthPerTurn) {

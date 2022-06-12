@@ -8,7 +8,15 @@ public class CityTile : Tile
     public int id;
     public bool[,] ownedTiles;
 
+    public int maxHealth;
+    
+    public int currentHealth;
+
     public CityTile(Vector2Int _gridSize, Vector2Int _gridIndex, int id): base(_gridSize) {
+
+        this.maxHealth = 3;
+
+        this.currentHealth = this.maxHealth;
 
         this.ownedTiles = new bool[_gridSize.x, _gridSize.y];
         

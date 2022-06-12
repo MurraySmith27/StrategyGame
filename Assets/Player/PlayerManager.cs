@@ -9,9 +9,9 @@ public class PlayerManager : MonoBehaviour
     public int numStartingPlayers;
 
     //each arraylist entry stores the id of all the cities that belong to the player with key == id.
-    private Dictionary<int, ArrayList> playerToCities;
+    private Dictionary<int, List<int>> playerToCities;
 
-    private Dictionary<int, ArrayList> playerToPieces;
+    private Dictionary<int, List<int>> playerToPieces;
 
     //stores the current growth of each player.
     private Dictionary<int, int> playerToGrowth;
@@ -29,8 +29,8 @@ public class PlayerManager : MonoBehaviour
         if (!instance)
             instance = this;  
         
-        playerToCities = new Dictionary<int, ArrayList>();
-        playerToPieces = new Dictionary<int, ArrayList>();
+        playerToCities = new Dictionary<int, List<int>>();
+        playerToPieces = new Dictionary<int, List<int>>();
         playerToGrowth = new Dictionary<int, int>();
         playerToProduction = new Dictionary<int, int>();
 
@@ -41,8 +41,8 @@ public class PlayerManager : MonoBehaviour
 
 
     public void AddPlayer() {
-        playerToCities[numPlayers] = new ArrayList();
-        playerToPieces[numPlayers] = new ArrayList();
+        playerToCities[numPlayers] = new List<int>();
+        playerToPieces[numPlayers] = new List<int>();
         playerToGrowth[numPlayers] = 0;
         playerToProduction[numPlayers] = 0;
         numPlayers++;
@@ -100,6 +100,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void RemoveCityForPlayer(int cityId) {
+
+        foreach (KeyValuePair<int, List<int>> keyValuePair in this.playerToCities) {
+            if (keyValuePair.Value.IndexOf(cityId) != -1) {
+                keyValuePair.Value.Remove(cityId);
+            }
+        }
+    }
+
     public void AddPieceForPlayer(int playerIndex, Vector2Int position, PieceTypes type, int pawnDirection = -1) {
         
         if (GridManager.instance.CanPlacePieceAt(position, type)) {
@@ -129,6 +138,14 @@ public class PlayerManager : MonoBehaviour
             );
         }
 
+    }
+
+    public void RemovePieceForPlayer(int pieceId) {
+        foreach (KeyValuePair<int, List<int>> keyValuePair in this.playerToPieces) {
+            if (keyValuePair.Value.IndexOf(pieceId) != -1) {
+                keyValuePair.Value.Remove(pieceId);
+            }
+        }
     }
 
 

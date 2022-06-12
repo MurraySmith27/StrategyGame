@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-public class Piece {
+public abstract class Piece {
 
     public Vector2Int gridIndex;
 
     public List<Vector2Int> movementVector;
+
+    public int currentHealth;
+
+    public int maxHealth;
+
+    public int damageOutput;
 
     public int id;
 

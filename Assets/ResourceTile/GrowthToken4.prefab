@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7432038003161810414}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GrowthToken4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6328589466886371578}
   - {fileID: 6282779123692085697}
@@ -46,7 +47,7 @@ GameObject:
   - component: {fileID: 3678765908764719833}
   - component: {fileID: 723611755576613065}
   - component: {fileID: 1257162180161965202}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GrowthCounter (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,6 +64,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.5, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 0.099999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7432038003161810414}
   m_RootOrder: 2
@@ -86,6 +88,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -142,7 +145,7 @@ GameObject:
   - component: {fileID: 3004002595993504192}
   - component: {fileID: 2728420459255983190}
   - component: {fileID: 334671583330001429}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GrowthCounter (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,6 +162,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.5, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 0.099999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7432038003161810414}
   m_RootOrder: 3
@@ -182,6 +186,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -238,7 +243,7 @@ GameObject:
   - component: {fileID: 1438089756624260574}
   - component: {fileID: 8792584108937005057}
   - component: {fileID: 5609599302991536576}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GrowthCounter (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,6 +260,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.5, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 0.099999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7432038003161810414}
   m_RootOrder: 1
@@ -278,6 +284,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -334,7 +341,7 @@ GameObject:
   - component: {fileID: 3727929480338244353}
   - component: {fileID: 3245145231521768086}
   - component: {fileID: 5811149863453886365}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GrowthCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,6 +358,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.5, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 0.099999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7432038003161810414}
   m_RootOrder: 0
@@ -374,6 +382,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

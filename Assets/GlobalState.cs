@@ -7,7 +7,8 @@ public enum mouseModes {
     DEFAULT,
     PLACE_CITY,
     PLACE_PAWN,
-    CHOOSE_PAWN_DIRECTION
+    CHOOSE_PAWN_DIRECTION,
+    SELECTING
 }
 
 public class GlobalState : MonoBehaviour
@@ -45,6 +46,12 @@ public class GlobalState : MonoBehaviour
             setCurrentPlayer(currentPlayer + 1);
         }
         BroadcastMessage("OnChangeTurn", currentPlayer);
+    }
+
+    public void Update() {
+        if (Input.GetMouseButtonDown(1)) {
+            GlobalState.instance.setMouseMode(mouseModes.DEFAULT);
+        }
     }
 
     public void setCurrentPlayer(int newPlayer) {

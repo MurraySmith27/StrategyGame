@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6448729731975628195}
   - component: {fileID: 7342034417002215322}
   - component: {fileID: 2351768589248935416}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ProductionCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.5, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 0.099999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1013312320141636546}
   m_RootOrder: 0
@@ -52,6 +53,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -108,7 +110,7 @@ GameObject:
   - component: {fileID: 9050369482071778975}
   - component: {fileID: 226876475459191347}
   - component: {fileID: 8716115883440227560}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ProductionCounter (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,6 +127,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.5, y: 0, z: -0.5}
   m_LocalScale: {x: 1, y: 0.099999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1013312320141636546}
   m_RootOrder: 2
@@ -148,6 +151,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -201,7 +205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1013312320141636546}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ProductionToken3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,6 +222,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7536343145787700751}
   - {fileID: 2187775706396087417}
@@ -237,7 +242,7 @@ GameObject:
   - component: {fileID: 1554478471560802223}
   - component: {fileID: 7938263461348451631}
   - component: {fileID: 3665854511078201442}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ProductionCounter (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,6 +259,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.5, y: 0, z: -0.5}
   m_LocalScale: {x: 1, y: 0.099999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1013312320141636546}
   m_RootOrder: 1
@@ -277,6 +283,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

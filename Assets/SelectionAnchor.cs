@@ -12,6 +12,7 @@ public class SelectionAnchor : MonoBehaviour {
         }
 
         SelectionManager.instance.SelectObject(this.objectId);
+        GlobalState.instance.setMouseMode(mouseModes.SELECTING);
     }
 
 }
