@@ -136,7 +136,7 @@ public class PlayerManager : MonoBehaviour
         for (int playerId = 0; playerId < numPlayers; playerId++) {
             int growthIncrement, prodIncrement;
             foreach(int cityId in playerToCities[playerId]){
-                (growthIncrement, prodIncrement) = GridManager.instance.GetCityGrowthAndProd(playerId);
+                (growthIncrement, prodIncrement) = GridManager.instance.GetCityGrowthAndProd(cityId);
                 playerToGrowth[playerId] += growthIncrement;
                 playerToProduction[playerId] += prodIncrement;
             }
