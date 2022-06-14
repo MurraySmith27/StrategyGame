@@ -81,7 +81,7 @@ public class SelectionManager : MonoBehaviour {
         //TODO: City selection.
     }
 
-    public void Update() {
+    public void LateUpdate() {
 
         if (GlobalState.instance.mouseMode != mouseModes.SELECTING) {
             this.DeselectAll();
