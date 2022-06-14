@@ -76,7 +76,7 @@ public class SelectionManager : MonoBehaviour {
         }
         
         //it's a city
-        CityTile city = GridManager.instance.GetCityTileFromId(objectId);
+        City city = GridManager.instance.GetCityTileFromId(objectId);
 
         //TODO: City selection.
     }

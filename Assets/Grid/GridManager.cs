@@ -74,16 +74,16 @@ public class GridManager : MonoBehaviour
     }
 
     public bool CanMovePieceTo(int pieceId, Vector2Int positionToMoveTo) {
-        Tile tile = this.grid.GetTileAt(positionToMoveTo.x, positionToMoveTo.y);
+        City city = this.grid.GetCityAt(positionToMoveTo.x, positionToMoveTo.y);
         Piece piece = this.grid.GetPieceAt(positionToMoveTo.x,positionToMoveTo.y);
 
-        return piece == null && tile != null && !(tile is CityTile);
+        return piece == null && city == null;
     }
 
     public bool CanPieceAttackAt(int pieceId, Vector2Int positionToAttackAt) {
-        Tile tile = this.grid.GetTileAt(positionToAttackAt.x, positionToAttackAt.y);
+        City city = this.grid.GetCityAt(positionToAttackAt.x, positionToAttackAt.y);
 
-        if (tile != null && tile is CityTile) {
+        if (city != null) {
             return true;
         }
 
@@ -109,9 +109,8 @@ public class GridManager : MonoBehaviour
             }
             else {
                 //case 2: defender is a city
-                Tile defenderTile = this.grid.GetTileAt(positionToAttackAt.x, positionToAttackAt.y);
-                if (defenderTile != null && defenderTile is CityTile) {
-                    CityTile defenderCity = defenderTile as CityTile;
+                City defenderCity = this.grid.GetCityAt(positionToAttackAt.x, positionToAttackAt.y);
+                if (defenderCity != null) {
                     if (defenderCity.currentHealth <= attackerPiece.damageOutput) return true;
                     else return false;
                 }
@@ -142,9 +141,8 @@ public class GridManager : MonoBehaviour
             }
             else {
                 //case 2: defender is a city
-                Tile defenderTile = this.grid.GetTileAt(positionToAttackAt.x, positionToAttackAt.y);
-                if (defenderTile != null && defenderTile is CityTile) {
-                    CityTile defenderCity = defenderTile as CityTile;
+                City defenderCity = this.grid.GetCityAt(positionToAttackAt.x, positionToAttackAt.y);
+                if (defenderCity != null) {
                     defenderCity.currentHealth -= attackerPiece.damageOutput;
                     if (defenderCity.currentHealth <= 0) {
                         this.DestroyCity(defenderCity.id);
@@ -212,13 +210,13 @@ public class GridManager : MonoBehaviour
         return new Vector2Int();
     }
 
-    public CityTile GetCityTileFromId(int cityId) {
+    public City GetCityTileFromId(int cityId) {
 
         for (int x = 0; x < this.gridSize.x; x++) {
             for (int y = 0; y < this.gridSize.y; y++) {
-                Tile tileAt = this.grid.GetTileAt(x, y);
-                if (tileAt != null && tileAt is CityTile && ((CityTile)tileAt).id == cityId) {
-                    return (CityTile)tileAt;
+                City cityAt = this.grid.GetCityAt(x, y);
+                if (cityAt != null && cityAt.id == cityId) {
+                    return cityAt;
                 }
             }
         }
@@ -230,8 +228,8 @@ public class GridManager : MonoBehaviour
 
         for (int x = 0; x < this.gridSize.x; x++) {
             for (int y = 0; y < this.gridSize.y; y++) {
-                Tile tileAt = this.grid.GetTileAt(x, y);
-                if (tileAt != null && tileAt is CityTile && ((CityTile)tileAt).id == cityId) {
+                City cityAt = this.grid.GetCityAt(x, y);
+                if (cityAt != null && cityAt is City && cityAt.id == cityId) {
                     return new Vector2Int(x, y);
                 }
             }
@@ -254,8 +252,8 @@ public class GridManager : MonoBehaviour
     public void InstantiateResourcePrefab(int x, int y) {
         this.instantiatedGridPrefabs[x, y] = Instantiate(resourceTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
         //SendMessage just calls these methods in the ResourceTile class.
-        this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetGrowth", (this.grid.GetTileAt(x,y) as ResourceTile).growthPerTurn);
-        this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetProduction", (this.grid.GetTileAt(x,y) as ResourceTile).productionPerTurn);
+        this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetGrowth", this.grid.GetTileAt(x,y).growthPerTurn);
+        this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetProduction", this.grid.GetTileAt(x,y).productionPerTurn);
     }
 
     public void InstantiateCityPrefab(int x, int y, int player, int cityId) {
@@ -266,7 +264,8 @@ public class GridManager : MonoBehaviour
         //go through all owned city tiles and instantiate the border prefab.
         for (int x2 = 0; x2 < this.grid.gridSize.x; x2++){
             for (int y2 = 0; y2 < this.grid.gridSize.y; y2++){
-                if (this.grid.GetTileAt(x,y) is CityTile && (this.grid.GetTileAt(x, y) as CityTile).ownedTiles[x2, y2]) {
+                City city = this.grid.GetCityAt(x, y);
+                if (city != null && city.ownedTiles[x2, y2]) {
                     GameObject newBorder = Instantiate(borderPrefab, new Vector3(this.cellWidth * x2 + this.cellWidth / 2f, 0, this.cellWidth * y2 + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
                     newBorder.GetComponent<CityBorder>().AddPlayerColor(player);
                     this.borderPrefabs.Add(newBorder);
@@ -298,7 +297,6 @@ public class GridManager : MonoBehaviour
             this.gridDebug.AddGrid(this.grid);
         }
 
-
         this.grid.CreateGrid();
         
         CreateTiles();
@@ -306,18 +304,19 @@ public class GridManager : MonoBehaviour
         this.instantiatedGridPrefabs = new GameObject[this.grid.gridSize.x, this.grid.gridSize.y];
         for (int x = 0; x < this.grid.gridSize.x; x++){
             for (int y = 0; y < this.grid.gridSize.y; y++) {
-                Tile tile = this.grid.GetTileAt(x, y);
-                if (tile is ResourceTile) {
+                City city = this.grid.GetCityAt(x, y);
+                if (city == null) {
                     InstantiateResourcePrefab(x, y);
                     
                 }
-                else if (tile is CityTile) {
-                    int playerId = PlayerManager.instance.getPlayerFromCityId(((CityTile)tile).id);
+                else {
+                    int playerId = PlayerManager.instance.getPlayerFromCityId(city.id);
                     if (playerId != -1) {
-                        InstantiateCityPrefab(x, y, playerId, ((CityTile)tile).id);
+                        InstantiateCityPrefab(x, y, playerId, city.id);
                     }
                     else {
                         Debug.LogError("Trying to find a player id for a city that is not registered with PlayerManager from GridManager.");
+                        Debug.Break();
                     }
                 }
             }
@@ -334,17 +333,19 @@ public class GridManager : MonoBehaviour
                 //remove existing tiles
                 //First, update tile prefabs
                 Destroy(this.instantiatedGridPrefabs[x, y]);
-                Tile tile = this.grid.GetTileAt(x, y);
-                if (tile is ResourceTile) {
+                ResourceTile tile = this.grid.GetTileAt(x, y);
+                City city = this.grid.GetCityAt(x, y);
+                if (city == null) {
                     InstantiateResourcePrefab(x,y);
                 }
-                else if (tile is CityTile) {
-                    int playerId = PlayerManager.instance.getPlayerFromCityId(((CityTile)tile).id);
+                else {
+                    int playerId = PlayerManager.instance.getPlayerFromCityId(city.id);
                     if (playerId != -1) {
-                        InstantiateCityPrefab(x, y, playerId, ((CityTile)tile).id);
+                        InstantiateCityPrefab(x, y, playerId, city.id);
                     }
                     else {
                         Debug.LogError("Trying to find a player id for a city that is not registered with PlayerManager from GridManager.");
+                        Debug.Break();
                     }
                 }
 
