@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceTileManager : MonoBehaviour
+public class ResourceTileManager : MonoBehaviour, IClickable
 {
 
     public GameObject growthTokenPrefab1;
@@ -30,6 +30,8 @@ public class ResourceTileManager : MonoBehaviour
     private GameObject previewPawnArrow;
 
     public Camera cam;
+
+    private bool isMouseOver = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,31 @@ public class ResourceTileManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //detect mouse events
+        if (ShouldProcessMouseEvent()) {
+            if (MouseEventUtils.IsClicked(
+                Camera.main, 
+                gameObject.GetComponent<Collider>(),
+                LayerMask.GetMask("ResourceTile")
+                )) OnClick();
+            else {
+                if (MouseEventUtils.IsMouseOver(
+                    Camera.main, 
+                    gameObject.GetComponent<Collider>(),
+                    LayerMask.GetMask("ResourceTile")
+                    )) {
+                    if (!this.isMouseOver){
+                        StartMouseOver();
+                        this.isMouseOver = true;
+                    }
+                }
+                else if (this.isMouseOver) {
+                    this.isMouseOver = false;
+                    EndMouseOver();
+                }
+            }
+        }
+
         if (GlobalState.instance.mouseMode == mouseModes.CHOOSE_PAWN_DIRECTION && 
             GlobalState.instance.pawnToPlacePosition.x == gameObject.transform.position.x && 
             GlobalState.instance.pawnToPlacePosition.y == gameObject.transform.position.z &&
@@ -157,7 +184,25 @@ public class ResourceTileManager : MonoBehaviour
         return pawnDirection;
     }
 
-    public void OnMouseDown() {
+    public bool ShouldProcessMouseEvent() {
+
+        string[] validMouseModes = {
+            mouseModes.DEFAULT.ToString(), 
+            mouseModes.PLACE_CITY.ToString(), 
+            mouseModes.PLACE_PAWN.ToString(), 
+            mouseModes.CHOOSE_PAWN_DIRECTION.ToString() 
+        };
+
+        for (int i = 0; i < validMouseModes.Length; i++) {
+            if (GlobalState.instance.mouseMode.ToString() == validMouseModes[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void OnClick() {
+
         if (GlobalState.instance.mouseMode == mouseModes.PLACE_CITY) {
             PlayerManager.instance.AddCityForPlayer(
                 GlobalState.instance.currentPlayer, 
@@ -208,7 +253,7 @@ public class ResourceTileManager : MonoBehaviour
         GlobalState.instance.setMouseMode(mouseModes.DEFAULT);
     }
 
-    public void OnMouseEnter() {
+    public void StartMouseOver() {
         if (GlobalState.instance.mouseMode == mouseModes.PLACE_CITY && hoverOverCityTile == null) {
             hoverOverCityTile = Instantiate(hoverOverCityTilePrefab, gameObject.transform);
         }
@@ -252,7 +297,7 @@ public class ResourceTileManager : MonoBehaviour
         } 
     }
 
-    public void OnMouseExit() {
+    public void EndMouseOver() {
         DestroyAllPrefabs();
     }
 
