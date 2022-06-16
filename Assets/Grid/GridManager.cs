@@ -274,13 +274,42 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void InstantiatePawnPrefab(int x, int y, int pawnId) {
-        GameObject instantiatedPawn = Instantiate(pawnPrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, 
-                                                          this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+    private GameObject GetPiecePrefabFromType(PieceTypes type) {
+        switch (type) {
+            case PieceTypes.Pawn:
+                return pawnPrefab;
+            default:
+                return null;
+        }
+    }
 
-        instantiatedPawn.GetComponent<SelectionAnchor>().objectId = pawnId;
+    public void InstantiatePiecePrefab(int x, int y, int pieceId, PieceTypes type) {
 
-        this.instantiatedPiecePrefabs[x, y] = instantiatedPawn;
+        GameObject prefab = this.GetPiecePrefabFromType(type);
+
+        if (prefab == null) {
+            Debug.LogError($"Cannot find a prefab associated with type {type.ToString()}");
+            Debug.Break();
+        }
+
+        GameObject instantiatedPiece = Instantiate(prefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, 
+                                                  this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+
+        instantiatedPiece.GetComponent<SelectionAnchor>().objectId = pieceId;
+
+        int playerId;
+
+        if ((playerId = PlayerManager.instance.GetPlayerFromPieceId(pieceId)) == -1) {
+            Debug.LogError($"Cannot find a player who owns the piece with id {pieceId}.");
+            Debug.Break();
+        }
+
+        instantiatedPiece.GetComponent<MeshRenderer>().material.SetColor("_Color", 
+            GlobalState.instance.playerColors[playerId]);
+
+
+        this.instantiatedPiecePrefabs[x, y] = instantiatedPiece;
+
     }
 
     /**
@@ -354,7 +383,7 @@ public class GridManager : MonoBehaviour
                 Piece currentPiece = null;
                 if ((currentPiece = this.grid.GetPieceAt(x, y)) != null) {
                     if (currentPiece is Pawn) {
-                        InstantiatePawnPrefab(x, y, currentPiece.id);
+                        InstantiatePiecePrefab(x, y, currentPiece.id, PieceTypes.Pawn);
                     }
                 }
             }

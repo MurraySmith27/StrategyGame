@@ -109,6 +109,16 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public int GetPlayerFromPieceId(int pieceId) {
+        foreach (KeyValuePair<int, List<int>> keyValuePair in this.playerToPieces) {
+            if (keyValuePair.Value.IndexOf(pieceId) != -1) {
+                return keyValuePair.Key;
+            }
+        }
+
+        return -1;
+    }
+
     public void AddPieceForPlayer(int playerIndex, Vector2Int position, PieceTypes type, int pawnDirection = -1) {
         
         if (GridManager.instance.CanPlacePieceAt(position, type)) {
@@ -116,6 +126,7 @@ public class PlayerManager : MonoBehaviour
                 playerToProduction[playerIndex] -= GameConstants.pawnCost;
 
                 int newPieceId = GridManager.instance.AddPiece(position, type, pawnDirection: pawnDirection);
+
                 if (newPieceId != -1) {
                     playerToPieces[playerIndex].Add(newPieceId);
                 }
