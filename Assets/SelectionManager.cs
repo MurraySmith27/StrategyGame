@@ -47,8 +47,8 @@ public class SelectionManager : MonoBehaviour {
 
             foreach (Vector2Int movement in piece.movementVector) {
                 
-                bool canMoveAt = GridManager.instance.CanMovePieceTo(piece.id, piecePos + movement);
-                bool canAttackAt = GridManager.instance.CanPieceAttackAt(piece.id, piecePos + movement);
+                bool canMoveAt = GridManager.instance.CanMovePieceTo(piece.id, piecePos + movement) && PlayerManager.instance.PlayerCanMovePiece(PlayerManager.instance.GetPlayerFromPieceId(objectId), objectId);
+                bool canAttackAt = GridManager.instance.CanPieceAttackAt(piece.id, piecePos + movement) && PlayerManager.instance.PlayerCanMovePiece(PlayerManager.instance.GetPlayerFromPieceId(objectId), objectId);;
 
                 //Don't show the move marker if it's an invalid move.
                 if (!canMoveAt && !canAttackAt) {

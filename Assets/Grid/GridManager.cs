@@ -81,15 +81,18 @@ public class GridManager : MonoBehaviour
     }
 
     public bool CanPieceAttackAt(int pieceId, Vector2Int positionToAttackAt) {
+
+        int player = PlayerManager.instance.GetPlayerFromPieceId(pieceId);
+
         City city = this.grid.GetCityAt(positionToAttackAt.x, positionToAttackAt.y);
 
-        if (city != null) {
+        if (city != null && PlayerManager.instance.GetPlayerFromCityId(city.id) != player) {
             return true;
         }
 
         Piece piece = this.grid.GetPieceAt(positionToAttackAt.x, positionToAttackAt.y);
 
-        if (piece != null) {
+        if (piece != null && PlayerManager.instance.GetPlayerFromPieceId(piece.id) != player) {
             return true;
         }
 
@@ -339,7 +342,7 @@ public class GridManager : MonoBehaviour
                     
                 }
                 else {
-                    int playerId = PlayerManager.instance.getPlayerFromCityId(city.id);
+                    int playerId = PlayerManager.instance.GetPlayerFromCityId(city.id);
                     if (playerId != -1) {
                         InstantiateCityPrefab(x, y, playerId, city.id);
                     }
@@ -368,7 +371,7 @@ public class GridManager : MonoBehaviour
                     InstantiateResourcePrefab(x,y);
                 }
                 else {
-                    int playerId = PlayerManager.instance.getPlayerFromCityId(city.id);
+                    int playerId = PlayerManager.instance.GetPlayerFromCityId(city.id);
                     if (playerId != -1) {
                         InstantiateCityPrefab(x, y, playerId, city.id);
                     }

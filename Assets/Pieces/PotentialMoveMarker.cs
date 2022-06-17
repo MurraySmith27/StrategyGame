@@ -20,6 +20,7 @@ public class PotentialMoveMarker : PieceActionMarker, IClickable
             Debug.LogError("Tried to make a piece move but the marker doesn't know it's own position or id.");
         }
         else {
+            PlayerManager.instance.MarkPieceAsMoved(underlyingPieceId);
             GridManager.instance.MovePiece(underlyingPieceId, position);
             GlobalState.instance.setMouseMode(mouseModes.DEFAULT);
         }

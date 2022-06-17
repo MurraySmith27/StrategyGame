@@ -20,7 +20,7 @@ public class PotentialAttackMarker : PieceActionMarker
         }
         else {
             bool attackerSurvives = GridManager.instance.WillAttackerSurvive(underlyingPieceId, position);
-
+            PlayerManager.instance.MarkPieceAsMoved(underlyingPieceId);
             GridManager.instance.ProcessAttack(underlyingPieceId, position);
             if (attackerSurvives) {
                 GridManager.instance.MovePiece(underlyingPieceId, position);

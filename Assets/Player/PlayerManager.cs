@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour 
+public class PlayerManager : MonoBehaviour, IRoundUpdateAction
 {
 
     public int numStartingPlayers;
@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour
     private Dictionary<int, List<int>> playerToCities;
 
     private Dictionary<int, List<int>> playerToPieces;
+
+    private Dictionary<int, List<int>> playerToPiecesMoved;
 
     //stores the current growth of each player.
     private Dictionary<int, int> playerToGrowth;
@@ -31,6 +33,7 @@ public class PlayerManager : MonoBehaviour
         
         playerToCities = new Dictionary<int, List<int>>();
         playerToPieces = new Dictionary<int, List<int>>();
+        playerToPiecesMoved = new Dictionary<int, List<int>>();
         playerToGrowth = new Dictionary<int, int>();
         playerToProduction = new Dictionary<int, int>();
 
@@ -43,6 +46,7 @@ public class PlayerManager : MonoBehaviour
     public void AddPlayer() {
         playerToCities[numPlayers] = new List<int>();
         playerToPieces[numPlayers] = new List<int>();
+        playerToPiecesMoved[numPlayers] = new List<int>();
         playerToGrowth[numPlayers] = 0;
         playerToProduction[numPlayers] = 0;
         numPlayers++;
@@ -57,13 +61,17 @@ public class PlayerManager : MonoBehaviour
         return playerToProduction[playerIndex] >= GameConstants.pawnCost;
     }
 
-    public int getPlayerFromCityId(int cityId) {
+    public int GetPlayerFromCityId(int cityId) {
         for (int playerId = 0; playerId < numPlayers; playerId++) {
             if (playerToCities[playerId].IndexOf(cityId) != -1) {
                 return playerId;
             }
         }
         return -1;
+    }
+
+    public bool PlayerCanMovePiece(int playerId, int pieceId) {
+        return playerToPiecesMoved[playerId].IndexOf(pieceId) == -1;
     }
 
     public void AddCityForPlayer(int playerIndex, Vector2Int position) {
@@ -120,11 +128,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void AddPieceForPlayer(int playerIndex, Vector2Int position, PieceTypes type, int pawnDirection = -1) {
-        
+
         if (GridManager.instance.CanPlacePieceAt(position, type)) {
             if (this.CanPlacePawn(playerIndex)) {
                 playerToProduction[playerIndex] -= GameConstants.pawnCost;
-
+                
                 int newPieceId = GridManager.instance.AddPiece(position, type, pawnDirection: pawnDirection);
 
                 if (newPieceId != -1) {
@@ -159,15 +167,23 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void MarkPieceAsMoved(int pieceId) {
+        int player = this.GetPlayerFromPieceId(pieceId);
+
+        this.playerToPiecesMoved[pieceId].Add(pieceId);
+    }
+
 
     public void OnRoundStart() {
         for (int playerId = 0; playerId < numPlayers; playerId++) {
             int growthIncrement, prodIncrement;
-            foreach(int cityId in playerToCities[playerId]){
+            foreach(int cityId in this.playerToCities[playerId]){
                 (growthIncrement, prodIncrement) = GridManager.instance.GetCityGrowthAndProd(cityId);
-                playerToGrowth[playerId] += growthIncrement;
-                playerToProduction[playerId] += prodIncrement;
+                this.playerToGrowth[playerId] += growthIncrement;
+                this.playerToProduction[playerId] += prodIncrement;
             }
+
+            this.playerToPiecesMoved[playerId].Clear();
         }
     }
 
