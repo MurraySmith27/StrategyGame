@@ -12,6 +12,8 @@ public class TileDeform : MonoBehaviour
 
     Vector3[] vertices;
 
+    Vector2[] uv;
+
     int[] triangles;
 
     void Start()
@@ -42,13 +44,16 @@ public class TileDeform : MonoBehaviour
             }
             vert++;
         }
-    
+
+        uv = new Vector2[(xVertices + 1) * (zVertices + 1)];
+
 
         int i = 0;
         for (int z = 0; z <= zVertices; z++) {
             for (int x = 0; x <= zVertices; x++) {
                 float y = x == 0 || z == 0 || x == xVertices || z == zVertices ? 0 : Mathf.PerlinNoise(x * 0.3f, z * 0.3f) * noiseIntensity;
                 vertices[i] = new Vector3(x, y, z);
+                uv[i] = new Vector2((float)x / xVertices, (float)z / zVertices);
                 i++;
             }
         }
@@ -59,6 +64,7 @@ public class TileDeform : MonoBehaviour
         mesh.Clear();
 
         mesh.vertices = vertices;
+        mesh.SetUVs(0, uv);
         mesh.triangles = triangles;
 
         mesh.RecalculateNormals();
