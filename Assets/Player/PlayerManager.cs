@@ -170,7 +170,7 @@ public class PlayerManager : MonoBehaviour, IRoundUpdateAction
     public void MarkPieceAsMoved(int pieceId) {
         int player = this.GetPlayerFromPieceId(pieceId);
 
-        this.playerToPiecesMoved[pieceId].Add(pieceId);
+        this.playerToPiecesMoved[player].Add(pieceId);
     }
 
 
