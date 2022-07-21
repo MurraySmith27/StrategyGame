@@ -68,9 +68,11 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Grasswidth: 0.01
+    - _GrassDistance: 1.41
+    - _Grasswidth: 0.0001
     - _Metallic: 0
     - _Mode: 0
+    - _NoiseDensity: 1000
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _ShineFrequency: 1
@@ -81,10 +83,12 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _stepCutoff: 1
     m_Colors:
     - _BaseColor: {r: 0.23363563, g: 0.46226418, b: 0.13737096, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Scale: {r: 1, g: 1, b: 0, a: 0}
     - _ShineColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4915894123863501606
