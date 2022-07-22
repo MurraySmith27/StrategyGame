@@ -40,11 +40,11 @@ public class SelectionManager : MonoBehaviour {
         Piece piece = GridManager.instance.GetPieceFromId(objectId);
 
         if (piece != null) {
+            int pieceOwner = PlayerManager.instance.GetPlayerFromPieceId(piece.id);
             //draw the projected movements.
             Vector2Int piecePos = GridManager.instance.GetPiecePositionFromId(objectId);
 
             float cellWidth = GridManager.instance.cellWidth;
-
             foreach (Vector2Int movement in piece.movementVector) {
                 
                 bool canMoveAt = GridManager.instance.CanMovePieceTo(piece.id, piecePos + movement) && PlayerManager.instance.PlayerCanMovePiece(PlayerManager.instance.GetPlayerFromPieceId(objectId), objectId);

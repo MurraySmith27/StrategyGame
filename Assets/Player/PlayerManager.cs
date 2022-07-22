@@ -71,7 +71,9 @@ public class PlayerManager : MonoBehaviour, IRoundUpdateAction
     }
 
     public bool PlayerCanMovePiece(int playerId, int pieceId) {
-        return playerToPiecesMoved[playerId].IndexOf(pieceId) == -1;
+        int pieceOwner = playerToPieces[playerId].IndexOf(pieceId);
+        return playerId == GlobalState.instance.currentPlayer && pieceOwner == playerId && 
+            playerToPiecesMoved[playerId].IndexOf(pieceId) == -1;
     }
 
     public void AddCityForPlayer(int playerIndex, Vector2Int position) {
