@@ -1504,9 +1504,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95bc02692b9f747d290e901d87a33227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xVertices: 100
-  zVertices: 100
-  noiseIntensity: 2
+  xVertices: 10
+  zVertices: 10
+  tileSize: 10
+  borderSize: 3
+  noiseIntensity: 1
 --- !u!23 &956416071
 MeshRenderer:
   m_ObjectHideFlags: 0
