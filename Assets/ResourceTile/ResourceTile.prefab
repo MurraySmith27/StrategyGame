@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c264319b760d3c64292a0d1a8c3b25fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heightOffset: 10
   growthTokenPrefab1: {fileID: 6111083425127951591, guid: fdf4c9d2d6bdcee4980bb6643c0eaf39, type: 3}
   growthTokenPrefab2: {fileID: 5490066074147187569, guid: 30f1cee0231865a4e979110ce223a8a1, type: 3}
   growthTokenPrefab3: {fileID: 9198902882711948933, guid: aa26fdcf2dafd354b98a6daa1ecf5edd, type: 3}

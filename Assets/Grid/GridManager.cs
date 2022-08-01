@@ -253,14 +253,14 @@ public class GridManager : MonoBehaviour
     }
 
     public void InstantiateResourcePrefab(int x, int y) {
-        this.instantiatedGridPrefabs[x, y] = Instantiate(resourceTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+        this.instantiatedGridPrefabs[x, y] = Instantiate(resourceTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, VisualConfig.tileInstantiateHeight, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
         //SendMessage just calls these methods in the ResourceTile class.
         this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetGrowth", this.grid.GetTileAt(x,y).growthPerTurn);
         this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetProduction", this.grid.GetTileAt(x,y).productionPerTurn);
     }
 
     public void InstantiateCityPrefab(int x, int y, int player, int cityId) {
-        GameObject instantiatedCity = Instantiate(cityTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+        GameObject instantiatedCity = Instantiate(cityTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, VisualConfig.tileInstantiateHeight, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
         instantiatedCity.GetComponent<SelectionAnchor>().objectId = cityId;
         this.instantiatedGridPrefabs[x, y] = instantiatedCity;
 
@@ -269,7 +269,7 @@ public class GridManager : MonoBehaviour
             for (int y2 = 0; y2 < this.grid.gridSize.y; y2++){
                 City city = this.grid.GetCityAt(x, y);
                 if (city != null && city.ownedTiles[x2, y2]) {
-                    GameObject newBorder = Instantiate(borderPrefab, new Vector3(this.cellWidth * x2 + this.cellWidth / 2f, 0, this.cellWidth * y2 + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+                    GameObject newBorder = Instantiate(borderPrefab, new Vector3(this.cellWidth * x2 + this.cellWidth / 2f, VisualConfig.tileInstantiateHeight, this.cellWidth * y2 + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
                     newBorder.GetComponent<CityBorder>().AddPlayerColor(player);
                     this.borderPrefabs.Add(newBorder);
                 }
@@ -295,7 +295,7 @@ public class GridManager : MonoBehaviour
             Debug.Break();
         }
 
-        GameObject instantiatedPiece = Instantiate(prefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, 0, 
+        GameObject instantiatedPiece = Instantiate(prefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, VisualConfig.tileInstantiateHeight, 
                                                   this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
 
         instantiatedPiece.GetComponent<SelectionAnchor>().objectId = pieceId;

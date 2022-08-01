@@ -59,7 +59,7 @@ public class SelectionManager : MonoBehaviour {
                         canMoveAt ? potentialMovePrefab : canAttackAt ? potentialAttackPrefab : null,
                         new Vector3(
                             cellWidth * (piecePos.x + movement.x) + cellWidth / 2f,
-                            0,
+                            VisualConfig.tileInstantiateHeight,
                             cellWidth * (piecePos.y + movement.y) + cellWidth / 2f
                         ),
                         Quaternion.identity,

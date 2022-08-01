@@ -108,8 +108,6 @@ public class TileDeform : MonoBehaviour
                         yMult = 1 - ((float)Mathf.Max(xDistanceFromBorder, zDistanceFromBorder) / borderSize);
                     }
 
-                    Debug.Log($"xDistance: {xDistanceFromBorder}, zDistance: {zDistanceFromBorder}, yMult: {yMult}");
-
                     y = yMult * tempVerts[closestZ][closestX].y;
                 }
 

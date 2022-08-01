@@ -97,7 +97,7 @@ Material:
     - _ZWrite: 1
     - _density: 5
     - _positionWaveAmp: 1
-    - _sharpness: 0
+    - _sharpness: 0.2
     - _sparklespeed: 1
     m_Colors:
     - _Accent: {r: 0.9568627, g: 0.9568627, b: 0.9764706, a: 0}

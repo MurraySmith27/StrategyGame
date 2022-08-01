@@ -83,7 +83,6 @@ public class ResourceTileManager : MonoBehaviour, IClickable
     }
 
     public void SetGrowth(int numGrowthPerTurn) {
-        
 
         GameObject x;
         switch(numGrowthPerTurn){
@@ -289,7 +288,7 @@ public class ResourceTileManager : MonoBehaviour, IClickable
                 default:
                     break;
             }
-            previewPawnArrow = Instantiate(hoverOverPawnArrowPrefab, new Vector3(GlobalState.instance.pawnToPlacePosition.x, 0, GlobalState.instance.pawnToPlacePosition.y), Quaternion.Euler(0, yRotation, 0), gameObject.transform);
+            previewPawnArrow = Instantiate(hoverOverPawnArrowPrefab, new Vector3(GlobalState.instance.pawnToPlacePosition.x, VisualConfig.tileInstantiateHeight, GlobalState.instance.pawnToPlacePosition.y), Quaternion.Euler(0, yRotation, 0), gameObject.transform);
         }
         else if (GlobalState.instance.mouseMode != mouseModes.CHOOSE_PAWN_DIRECTION && previewPawnArrow != null) {
             Destroy(previewPawnArrow);
