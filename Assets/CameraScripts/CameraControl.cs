@@ -8,10 +8,18 @@ public class CameraControl : MonoBehaviour
     public float zoomRate = 1f;
 
     Vector3 initialPosition;
+
+    Camera mainCamera;
+    private void Awake()
+    {
+        mainCamera = gameObject.GetComponent<Camera>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         initialPosition = gameObject.transform.localPosition;
+        mainCamera.depthTextureMode = DepthTextureMode.Depth;
     }
 
     // Update is called once per frame
