@@ -60,6 +60,13 @@ Shader "Custom/WaterShader2"
                 float2 distortUV : TEXCOORD1;
             };
 
+            float CorrectDepth(float rawDepth)
+            {
+                float persp = LinearEyeDepth(rawDepth);
+                float ortho = (_ProjectionParams.z-_ProjectionParams.y)*(1-rawDepth)+_ProjectionParams.y;
+                return lerp(persp,ortho,unity_OrthoParams.w);
+            }
+
             v2f vert(appdata v)
             {
                 v2f o;
@@ -91,7 +98,7 @@ Shader "Custom/WaterShader2"
                 float4 waterColor = lerp(_DepthGradientShallow, _DepthGradientDeep,
                 waterDepthDistance1);
 
-                float2 distortSample = (tex2D(_SurfaceDistortion, i.distortUV) * 2 - 1) * _SurfaceDistortionAmount;
+                float2 distortSample = (tex2D(_SurfaceDistortion, i.distortUV)   * 2 - 1) * _SurfaceDistortionAmount;
 
                 float2 scrollingNoiseUV = float2((i.noiseUV.x + _Time.y * _SurfaceNoiseScroll.x) + distortSample.x,
                     (i.noiseUV.y + _Time.y * _SurfaceNoiseScroll.y) + distortSample.y);

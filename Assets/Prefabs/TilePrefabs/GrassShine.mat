@@ -64,7 +64,7 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _Beach_Low: -0.5
+    - _Beach_Low: 4
     - _BumpScale: 1
     - _Contrast: 1
     - _Cutoff: 0.5
@@ -92,7 +92,7 @@ Material:
     - _UVSec: 0
     - _WindQuality: 0
     - _ZWrite: 1
-    - _beachHigh: 0
+    - _beachHigh: 10
     - _grassSpeed: 15
     - _stepCutoff: 1
     - _waveyness: 10
