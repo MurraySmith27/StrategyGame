@@ -7,6 +7,6 @@ using UnityEngine;
 public class VisualConfig
 {
 
-    public static float tileInstantiateHeight = 10f;
+    public static float tileInstantiateHeight = 6f;
     
 }

@@ -102,7 +102,7 @@ public class TileDeform : MonoBehaviour
                     }
 
                     if (xDistanceFromBorder == zDistanceFromBorder) {
-                        yMult = 1 - (float)(xDistanceFromBorder * xDistanceFromBorder + zDistanceFromBorder * zDistanceFromBorder) / (2 * borderSize * borderSize);
+                        yMult = 1 - (float)(xDistanceFromBorder) / (borderSize);
                     }
                     else {
                         yMult = 1 - ((float)Mathf.Max(xDistanceFromBorder, zDistanceFromBorder) / borderSize);

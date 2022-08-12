@@ -71,8 +71,8 @@ public class PlayerManager : MonoBehaviour, IRoundUpdateAction
     }
 
     public bool PlayerCanMovePiece(int playerId, int pieceId) {
-        int pieceOwner = playerToPieces[playerId].IndexOf(pieceId);
-        return playerId == GlobalState.instance.currentPlayer && pieceOwner == playerId && 
+        bool playerOwnsPiece = playerToPieces[playerId].IndexOf(pieceId) != -1;
+        return playerId == GlobalState.instance.currentPlayer && playerOwnsPiece && 
             playerToPiecesMoved[playerId].IndexOf(pieceId) == -1;
     }
 
