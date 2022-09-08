@@ -16,8 +16,6 @@ public class UIController : MonoBehaviour, IChangeTurnAction, IGameOverAction
 
     public UIMenus currentUI = UIMenus.MAIN;
 
-    public Dictionary<UIMenus, GameObject> menus;
-
     public Text playerLabelText;
 
     public Text gameOverScreenText;
@@ -26,30 +24,58 @@ public class UIController : MonoBehaviour, IChangeTurnAction, IGameOverAction
 
     public GameObject gameOverMenuCanvas;
 
-    public void Awake()
-    {
-        this.menus = new Dictionary<UIMenus, GameObject>();
+    public GameObject citySelectCanvas;
 
-        this.menus[UIMenus.MAIN] = mainMenuCanvas;
+    public GameObject pieceSelectCanvas;
 
-        this.menus[UIMenus.GAMEOVER] = gameOverMenuCanvas;
-
-        //TODO: Add other menus to dict.
-    }
 
     public void OnChangeTurn(int currentPlayer)
     {
         playerLabelText.text = "Player " + currentPlayer;
     }
 
+    public void OnSelectCity(int cityId)
+    {
+        this.SetActiveMenu(UIMenus.CITYSELECT);
+    }
+
+    public void OnSelectPiece(int pieceId)
+    {
+        this.SetActiveMenu(UIMenus.PIECESELECT);
+    }
+
 
     public void SetActiveMenu(UIMenus newActiveMenu)
     {
-        this.menus[this.currentUI].SetActive(false);
-
-        this.currentUI = newActiveMenu;
-
-        this.menus[newActiveMenu].SetActive(true);
+       switch (newActiveMenu)
+        {
+            case UIMenus.MAIN:
+                this.mainMenuCanvas.SetActive(true);
+                this.citySelectCanvas.SetActive(false);
+                this.pieceSelectCanvas.SetActive(false);
+                this.gameOverMenuCanvas.SetActive(false);
+                break;
+            case UIMenus.CITYSELECT:
+                this.mainMenuCanvas.SetActive(true);
+                this.citySelectCanvas.SetActive(true);
+                this.pieceSelectCanvas.SetActive(false);
+                this.gameOverMenuCanvas.SetActive(false);
+                break;
+            case UIMenus.PIECESELECT:
+                this.mainMenuCanvas.SetActive(true);
+                this.citySelectCanvas.SetActive(false);
+                this.pieceSelectCanvas.SetActive(true);
+                this.gameOverMenuCanvas.SetActive(false);
+                break;
+            case UIMenus.GAMEOVER:
+                this.mainMenuCanvas.SetActive(false);
+                this.citySelectCanvas.SetActive(false);
+                this.pieceSelectCanvas.SetActive(false);
+                this.gameOverMenuCanvas.SetActive(true);
+                break;
+            default:
+                break;
+        }
     }
 
 

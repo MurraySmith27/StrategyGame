@@ -12,6 +12,8 @@ public class SelectionManager : MonoBehaviour {
 
     public static SelectionManager instance;
 
+    public GameObject UIRoot;
+
     private bool selectedThisFrame = false;
 
     public void Awake() {
@@ -46,9 +48,9 @@ public class SelectionManager : MonoBehaviour {
 
             float cellWidth = GridManager.instance.cellWidth;
             foreach (Vector2Int movement in piece.movementVector) {
-                
+
                 bool canMoveAt = GridManager.instance.CanMovePieceTo(piece.id, piecePos + movement) && PlayerManager.instance.PlayerCanMovePiece(PlayerManager.instance.GetPlayerFromPieceId(objectId), objectId);
-                bool canAttackAt = GridManager.instance.CanPieceAttackAt(piece.id, piecePos + movement) && PlayerManager.instance.PlayerCanMovePiece(PlayerManager.instance.GetPlayerFromPieceId(objectId), objectId);;
+                bool canAttackAt = GridManager.instance.CanPieceAttackAt(piece.id, piecePos + movement) && PlayerManager.instance.PlayerCanMovePiece(PlayerManager.instance.GetPlayerFromPieceId(objectId), objectId); ;
 
                 //Don't show the move marker if it's an invalid move.
                 if (!canMoveAt && !canAttackAt) {
@@ -73,12 +75,18 @@ public class SelectionManager : MonoBehaviour {
 
                 instantiatedPotentialMovePrefabs.Add(pieceActionMarkerGO);
             }
+            //update UI
+            this.UIRoot.GetComponent<UIController>().OnSelectPiece(piece.id);
         }
         
         //it's a city
         City city = GridManager.instance.GetCityTileFromId(objectId);
 
-        //TODO: City selection.
+        if (city != null)
+        {
+            //update UI
+            this.UIRoot.GetComponent<UIController>().OnSelectCity(city.id);
+        }
     }
 
     public void LateUpdate() {
