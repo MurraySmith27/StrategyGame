@@ -7,7 +7,7 @@ public enum PieceTypes {
     Pawn,
 }
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviour, IGameOverAction
 {
     
     public static GridManager instance;
@@ -40,10 +40,9 @@ public class GridManager : MonoBehaviour
 
     //---- Begin GridManager API functions ----
 
-    public void EndGame(int winnerId)
+    public void OnGameOver(int winningPlayer)
     {
-        //TODO
-        Debug.Log($"game over! Winner is player {winnerId}");
+        //TODO game over logic (clear the board).
     }
 
     public (int, int) GetCityGrowthAndProd(int cityId) {
@@ -161,7 +160,7 @@ public class GridManager : MonoBehaviour
                         if (PlayerManager.instance.GetNumCitiesForPlayer(defendingPlayer) == 0)
                         {
                             //game over!
-                            this.EndGame(attackingPlayer);
+                            GlobalState.instance.EndGame(attackingPlayer);
                             return;
                         }
                     }

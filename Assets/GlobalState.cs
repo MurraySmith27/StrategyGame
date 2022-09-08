@@ -39,6 +39,11 @@ public class GlobalState : MonoBehaviour
         BroadcastMessage("OnChangeTurn", currentPlayer);
     }
 
+    public void EndGame(int winningPlayer)
+    {
+        BroadcastMessage("OnGameOver", winningPlayer);
+    }
+
     private bool CanChangeTurn(out string errorMessage)
     {
 

@@ -1,13 +1,18 @@
 using UnityEngine;
 
-interface IRoundUpdateAction {
+public interface IRoundUpdateAction {
 
     public void OnRoundStart();
 }
 
-interface IChangeTurnAction {
+public interface IChangeTurnAction {
 
     public void OnChangeTurn(int currentPlayer);
+}
+
+public interface IGameOverAction
+{
+    public void OnGameOver(int winningPlayer);
 }
 
 public static class MouseEventUtils {
