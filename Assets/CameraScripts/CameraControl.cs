@@ -38,7 +38,6 @@ public class CameraControl : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            Debug.Log("MOUSE DOWN");
             Vector3 currentPosition = gameObject.transform.rotation * Input.mousePosition;
             if (isDragging)
             {

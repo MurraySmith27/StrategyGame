@@ -16,6 +16,8 @@ public class GlobalState : MonoBehaviour
 
     public int currentPlayer = 0;
 
+    public int roundNumber = 0;
+
     public mouseModes mouseMode = mouseModes.DEFAULT;
 
     public static GlobalState instance;
@@ -29,7 +31,7 @@ public class GlobalState : MonoBehaviour
             instance = this;
 
         mouseMode = mouseModes.DEFAULT;
-        
+
     }
 
     public void Start() {
@@ -37,15 +39,43 @@ public class GlobalState : MonoBehaviour
         BroadcastMessage("OnChangeTurn", currentPlayer);
     }
 
+    private bool CanChangeTurn(out string errorMessage)
+    {
+
+        errorMessage = "";
+
+        if (roundNumber == 0 &&
+            PlayerManager.instance.GetNumCitiesForPlayer(this.currentPlayer) == 0)
+        {
+            errorMessage = "Place a city before you end your first turn!";
+            return false;
+        }
+
+        return true;
+        
+    }
+
     public void changeTurn() {
-        if (currentPlayer == PlayerManager.instance.getNumPlayers() - 1) {
-            setCurrentPlayer(0);
-            BroadcastMessage("OnRoundStart");
+        string errorMessage;
+        if (CanChangeTurn(out errorMessage))
+        {
+
+
+            if (currentPlayer == PlayerManager.instance.getNumPlayers() - 1)
+            {
+                setCurrentPlayer(0);
+                BroadcastMessage("OnRoundStart");
+            }
+            else
+            {
+                setCurrentPlayer(currentPlayer + 1);
+            }
+            BroadcastMessage("OnChangeTurn", currentPlayer);
         }
-        else {
-            setCurrentPlayer(currentPlayer + 1);
+        else
+        {
+            PopupMessage.CreatePopupMessage("Nope!", errorMessage);
         }
-        BroadcastMessage("OnChangeTurn", currentPlayer);
     }
 
     public void Update() {

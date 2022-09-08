@@ -40,6 +40,12 @@ public class GridManager : MonoBehaviour
 
     //---- Begin GridManager API functions ----
 
+    public void EndGame(int winnerId)
+    {
+        //TODO
+        Debug.Log($"game over! Winner is player {winnerId}");
+    }
+
     public (int, int) GetCityGrowthAndProd(int cityId) {
         return this.grid.GetCityGrowthAndProd(cityId);
     }
@@ -134,6 +140,7 @@ public class GridManager : MonoBehaviour
 
     public void ProcessAttack(int attackerId, Vector2Int positionToAttackAt) {
         Piece attackerPiece = this.GetPieceFromId(attackerId);
+        int attackingPlayer = PlayerManager.instance.GetPlayerFromPieceId(attackerId);
 
         if (attackerPiece != null) {
             //case 1: defender is a piece
@@ -148,7 +155,15 @@ public class GridManager : MonoBehaviour
                 if (defenderCity != null) {
                     defenderCity.currentHealth -= attackerPiece.damageOutput;
                     if (defenderCity.currentHealth <= 0) {
+                        int defendingPlayer = PlayerManager.instance.GetPlayerFromCityId(defenderCity.id);
                         this.DestroyCity(defenderCity.id);
+                        //now that city is destroyed, check if defending player has any cities left.
+                        if (PlayerManager.instance.GetNumCitiesForPlayer(defendingPlayer) == 0)
+                        {
+                            //game over!
+                            this.EndGame(attackingPlayer);
+                            return;
+                        }
                     }
                 }
                 else {

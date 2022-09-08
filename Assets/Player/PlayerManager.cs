@@ -196,6 +196,11 @@ public class PlayerManager : MonoBehaviour, IRoundUpdateAction
         return this.playerToProduction[playerIndex];
     }
 
+    public int GetNumCitiesForPlayer(int playerId)
+    {
+        return this.playerToCities[playerId].Count;
+    }
+
     public int getNumPlayers() {
         return this.numPlayers;
     }

@@ -87,7 +87,7 @@ Material:
     - _BUILTIN_QueueOffset: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthMaxDistance: 100
+    - _DepthMaxDistance: 20
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FoamDistance: 11.1
