@@ -9,6 +9,11 @@ public class CameraControl : MonoBehaviour
     public float nearLimit = 10f;
     public float farLimit= 30f;
 
+    public float xMinBound = -10f;
+    public float xMaxBound = 90f;
+    public float zMinBound = -10f;
+    public float zMaxBound = 90f;
+
     public float scrollSpeed = 0.4f;
 
     private bool isDragging = false;
@@ -42,7 +47,13 @@ public class CameraControl : MonoBehaviour
             if (isDragging)
             {
                 Vector3 diff = lastFrameMousePos - currentPosition;
-                gameObject.transform.position += scrollSpeed * new Vector3(diff.x, 0, diff.z);
+                Vector3 amountToMove = scrollSpeed * new Vector3(diff.x, 0, diff.z);
+                Vector3 newPosition = gameObject.transform.position + amountToMove;
+
+                newPosition.x = Mathf.Min(Mathf.Max(newPosition.x, xMinBound), xMaxBound);
+                newPosition.z = Mathf.Min(Mathf.Max(newPosition.z, zMinBound), zMaxBound);
+
+                gameObject.transform.position = newPosition;
             }
             isDragging = true;
             lastFrameMousePos = currentPosition;

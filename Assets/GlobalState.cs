@@ -57,7 +57,6 @@ public class GlobalState : MonoBehaviour
         }
 
         return true;
-        
     }
 
     public void changeTurn() {
