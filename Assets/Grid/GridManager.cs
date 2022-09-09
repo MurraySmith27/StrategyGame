@@ -255,6 +255,11 @@ public class GridManager : MonoBehaviour, IGameOverAction
         return new Vector2Int();
     }
 
+    public List<Vector2Int> GetNewCityOwnedTiles(Vector2Int cityPosition)
+    {
+        return this.grid.GetNewCityOwnedTiles(cityPosition);
+    }
+
     //---- End GridManager API functions ----
 
     void Awake() {

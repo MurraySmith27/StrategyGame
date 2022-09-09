@@ -176,6 +176,17 @@ public class Grid
         return null;
     }
 
+    public List<Vector2Int> GetNewCityOwnedTiles(Vector2Int cityPos)
+    {
+        List<Vector2Int> borderPositions = new List<Vector2Int>(4);
+        borderPositions.Add(new Vector2Int(cityPos.x - 1, cityPos.y));
+        borderPositions.Add(new Vector2Int(cityPos.x + 1, cityPos.y));
+        borderPositions.Add(new Vector2Int(cityPos.x, cityPos.y - 1));
+        borderPositions.Add(new Vector2Int(cityPos.x, cityPos.y + 1));
+
+        return borderPositions;
+    }
+
     //adds a city to the board at the specified location. if a city cannot be built on this tile, return false and do not add the city.
     public int AddCity(Vector2Int position) {
 
@@ -183,6 +194,11 @@ public class Grid
         City city = new City(this.gridSize, position, newCityId);
 
         this.cities[newCityId] = city;
+
+        foreach (Vector2Int borderPos in this.GetNewCityOwnedTiles(position))
+        {
+            city.ownedTiles[borderPos.x, borderPos.y] = true;
+        }
         
         return newCityId;
     }

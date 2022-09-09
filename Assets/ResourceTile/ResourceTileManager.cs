@@ -20,6 +20,9 @@ public class ResourceTileManager : MonoBehaviour, IClickable
     public GameObject hoverOverCityTilePrefab;
     private GameObject hoverOverCityTile;
 
+    public GameObject hoverOverCityTileBorderPrefab;
+    public List<GameObject> hoverOverCityTileBorders;
+
     public GameObject hoverOverPawnPrefab;
 
     public GameObject hoverOverPawnArrowPrefab;
@@ -255,9 +258,31 @@ public class ResourceTileManager : MonoBehaviour, IClickable
     public void StartMouseOver() {
         if (GlobalState.instance.mouseMode == mouseModes.PLACE_CITY && hoverOverCityTile == null) {
             hoverOverCityTile = Instantiate(hoverOverCityTilePrefab, gameObject.transform);
+            //also instantiate the borders.
+            foreach (Vector2Int borderPosition in GridManager.instance.GetNewCityOwnedTiles(
+                new Vector2Int(
+                    (int)(gameObject.transform.position.x / GridManager.instance.cellWidth),
+                    (int)(gameObject.transform.position.z / GridManager.instance.cellWidth)
+                ))
+            ) {
+                hoverOverCityTileBorders.Add(Instantiate(
+                    hoverOverCityTileBorderPrefab,
+                    new Vector3(
+                        borderPosition.x * GridManager.instance.cellWidth  + GridManager.instance.cellWidth / 2f,
+                        gameObject.transform.position.y,
+                        borderPosition.y * GridManager.instance.cellWidth + GridManager.instance.cellWidth / 2f
+                    ),                    
+                    gameObject.transform.rotation
+                ));
+            }
         }
         else if (GlobalState.instance.mouseMode != mouseModes.PLACE_CITY && hoverOverCityTile != null) {
             Destroy(hoverOverCityTile);
+            foreach (GameObject instantiatedBorderPrefab in hoverOverCityTileBorders)
+            {
+                Destroy(instantiatedBorderPrefab);
+            }
+            hoverOverCityTileBorders.Clear();
             hoverOverCityTile = null;
         }
         if (GlobalState.instance.mouseMode == mouseModes.PLACE_PAWN && hoverOverPawn == null) {
@@ -313,5 +338,11 @@ public class ResourceTileManager : MonoBehaviour, IClickable
             Destroy(previewPawnArrow);
             previewPawnArrow = null;
         }
+
+        foreach (GameObject instantiatedBorderPrefab in hoverOverCityTileBorders)
+        {
+            Destroy(instantiatedBorderPrefab);
+        }
+        hoverOverCityTileBorders.Clear();
     }
 }
