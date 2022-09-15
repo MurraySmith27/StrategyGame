@@ -35,6 +35,7 @@ public class GlobalState : MonoBehaviour
     }
 
     public void Start() {
+        BroadcastMessage("OnGameStart");
         BroadcastMessage("OnRoundStart");
         BroadcastMessage("OnChangeTurn", currentPlayer);
     }

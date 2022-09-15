@@ -11,7 +11,8 @@ public enum UIMenus
     PIECESELECT
 }
 
-public class UIController : MonoBehaviour, IChangeTurnAction, IGameOverAction
+public class UIController : MonoBehaviour, IChangeTurnAction, IGameOverAction,
+    IGameStartAction
 {
 
     public UIMenus currentUI = UIMenus.MAIN;
@@ -31,7 +32,8 @@ public class UIController : MonoBehaviour, IChangeTurnAction, IGameOverAction
 
     public void OnChangeTurn(int currentPlayer)
     {
-        playerLabelText.text = "Player " + currentPlayer;
+        this.playerLabelText.text = "Player " + currentPlayer;
+        this.SetActiveMenu(UIMenus.MAIN);
     }
 
     public void OnSelectCity(int cityId)
@@ -42,6 +44,11 @@ public class UIController : MonoBehaviour, IChangeTurnAction, IGameOverAction
     public void OnSelectPiece(int pieceId)
     {
         this.SetActiveMenu(UIMenus.PIECESELECT);
+    }
+
+    public void OnDeselect()
+    {
+        this.SetActiveMenu(UIMenus.MAIN);
     }
 
 
@@ -78,10 +85,13 @@ public class UIController : MonoBehaviour, IChangeTurnAction, IGameOverAction
         }
     }
 
+    public void OnGameStart()
+    {
+        this.SetActiveMenu(UIMenus.MAIN);
+    }
 
     public void OnGameOver(int winningPlayer)
     {
-
         this.SetActiveMenu(UIMenus.GAMEOVER);
         gameOverScreenText.text = $"Game Over! Winner: Player {winningPlayer}.";
     }

@@ -31,6 +31,7 @@ public class SelectionManager : MonoBehaviour {
         }
 
         instantiatedPotentialMovePrefabs.Clear();
+        this.UIRoot.GetComponent<UIController>().OnDeselect();
     }
 
     public void SelectObject(int objectId) {

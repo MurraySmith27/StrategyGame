@@ -10,6 +10,11 @@ public interface IChangeTurnAction {
     public void OnChangeTurn(int currentPlayer);
 }
 
+public interface IGameStartAction
+{
+    public void OnGameStart();
+}
+
 public interface IGameOverAction
 {
     public void OnGameOver(int winningPlayer);
