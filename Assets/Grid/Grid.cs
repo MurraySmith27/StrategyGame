@@ -63,19 +63,16 @@ public class Grid
 
         for (int i = 0; i < this.gridSize.x; i++) {
             for (int j = 0; j < this.gridSize.y; j++) {
-                int numGrowthPerTurn = Random.Range(0, averageResourceCount + 1);
-                int numProductionPerTurn = averageResourceCount - numGrowthPerTurn;
+                int numGrowthPerTurn = 1;
+                int numProductionPerTurn = 1;
+                ResourceTileTypes type = ResourceTileTypes.Normal;
 
                 //add an extra random resource on random chance
-                if (Random.Range(0,6) == 5) {
-                    if (Random.Range(0, 2) == 0) {
-                        numGrowthPerTurn++;
-                    }
-                    else {
-                        numProductionPerTurn++;
-                    }
+                if (Random.Range(0, GameConstants.forestProbabilty) == 0) {
+                    numGrowthPerTurn++;
+                    type = ResourceTileTypes.Forest;
                 }
-                this.grid[i,j] = new ResourceTile(new Vector2Int(i,j), numGrowthPerTurn, numProductionPerTurn);
+                this.grid[i,j] = new ResourceTile(new Vector2Int(i,j), numGrowthPerTurn, numProductionPerTurn, type);
             }
         }
     }

@@ -25,6 +25,8 @@ public class GridManager : MonoBehaviour, IGameOverAction
 
     public GameObject pawnPrefab;
 
+    public GameObject forestTilePrefab;
+
     private GridDebug gridDebug;
 
     public int averageResourceCount = 2;
@@ -34,6 +36,8 @@ public class GridManager : MonoBehaviour, IGameOverAction
     private bool gridChanged = false;
 
     private GameObject[,] instantiatedGridPrefabs;
+
+    private GameObject[,] instantiatedForestPrefabs;
 
     private GameObject[,] instantiatedPiecePrefabs;
 
@@ -271,8 +275,17 @@ public class GridManager : MonoBehaviour, IGameOverAction
         this.grid.PopulateWithResourceTiles(averageResourceCount);
     }
 
-    public void InstantiateResourcePrefab(int x, int y) {
-        this.instantiatedGridPrefabs[x, y] = Instantiate(resourceTilePrefab, new Vector3(this.cellWidth * x + this.cellWidth / 2f, VisualConfig.tileInstantiateHeight, this.cellWidth * y + this.cellWidth / 2f), Quaternion.identity, gameObject.transform);
+    public void InstantiateResourcePrefab(int x, int y, ResourceTileTypes type) {
+        Vector3 pos = new Vector3(this.cellWidth * x + this.cellWidth / 2f, VisualConfig.tileInstantiateHeight, this.cellWidth * y + this.cellWidth / 2f);
+        this.instantiatedGridPrefabs[x, y] = Instantiate(resourceTilePrefab, pos, Quaternion.identity, gameObject.transform);
+        switch (type)
+        {
+            case ResourceTileTypes.Forest:
+                this.instantiatedForestPrefabs[x, y] = Instantiate(forestTilePrefab, pos, Quaternion.identity, gameObject.transform);
+                break;
+            default:
+                break;
+        }
         //SendMessage just calls these methods in the ResourceTile class.
         this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetGrowth", this.grid.GetTileAt(x,y).growthPerTurn);
         this.instantiatedGridPrefabs[x, y].transform.GetChild(0).SendMessage("SetProduction", this.grid.GetTileAt(x,y).productionPerTurn);
@@ -353,11 +366,13 @@ public class GridManager : MonoBehaviour, IGameOverAction
         CreateTiles();
 
         this.instantiatedGridPrefabs = new GameObject[this.grid.gridSize.x, this.grid.gridSize.y];
+        this.instantiatedForestPrefabs = new GameObject[this.grid.gridSize.x, this.grid.gridSize.y];
         for (int x = 0; x < this.grid.gridSize.x; x++){
             for (int y = 0; y < this.grid.gridSize.y; y++) {
                 City city = this.grid.GetCityAt(x, y);
+                ResourceTile tile = this.grid.GetTileAt(x, y);
                 if (city == null) {
-                    InstantiateResourcePrefab(x, y);
+                    InstantiateResourcePrefab(x, y, tile.type);
                     
                 }
                 else {
@@ -384,10 +399,11 @@ public class GridManager : MonoBehaviour, IGameOverAction
                 //remove existing tiles
                 //First, update tile prefabs
                 Destroy(this.instantiatedGridPrefabs[x, y]);
+                Destroy(this.instantiatedForestPrefabs[x, y]);
                 ResourceTile tile = this.grid.GetTileAt(x, y);
                 City city = this.grid.GetCityAt(x, y);
                 if (city == null) {
-                    InstantiateResourcePrefab(x,y);
+                    InstantiateResourcePrefab(x,y, tile.type);
                 }
                 else {
                     int playerId = PlayerManager.instance.GetPlayerFromCityId(city.id);

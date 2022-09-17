@@ -1624,6 +1624,7 @@ MonoBehaviour:
   cityTilePrefab: {fileID: 6518567043423253730, guid: 9abb32a47e2c7e04daf1767ea94ec91a, type: 3}
   borderPrefab: {fileID: 5342407021158059237, guid: 6b9068db25d64e04cb3012f138911a0f, type: 3}
   pawnPrefab: {fileID: 1006356879557798, guid: 7058bf188079741c2a507045f997f696, type: 3}
+  forestTilePrefab: {fileID: 2090482831551352724, guid: 9d8a533289a6846d593f155c3881afb3, type: 3}
   averageResourceCount: 2
 --- !u!4 &956416069
 Transform:
