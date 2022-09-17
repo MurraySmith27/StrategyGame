@@ -107,9 +107,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -181,9 +193,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -255,9 +279,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -329,9 +365,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -403,9 +451,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -477,9 +537,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -551,9 +623,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -625,9 +709,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -699,9 +795,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -773,9 +881,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -847,9 +967,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -921,9 +1053,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
@@ -995,9 +1139,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7577739868436781572, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2250737061861509726, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
       propertyPath: m_Name
       value: wind_waker_tree
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156380648761706199, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0fbf6a23f4474b4584427f189b4c393, type: 3}
