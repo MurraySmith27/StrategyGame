@@ -17,6 +17,9 @@ public class ResourceTileManager : MonoBehaviour, IClickable
     public GameObject productionTokenPrefab4;
     public GameObject productionTokenPrefab5;
 
+    private GameObject instantiatedGrowthToken;
+    private GameObject instantiatedProductionToken;
+
     public GameObject hoverOverCityTilePrefab;
     private GameObject hoverOverCityTile;
 
@@ -36,7 +39,7 @@ public class ResourceTileManager : MonoBehaviour, IClickable
 
     private bool isMouseOver = false;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         cam = Camera.main;
     }
@@ -81,37 +84,51 @@ public class ResourceTileManager : MonoBehaviour, IClickable
         }
 
         if (GlobalState.instance.mouseMode == mouseModes.DEFAULT) {
-            DestroyAllPrefabs();
+            DestroyHoverOverPrefabs();
         }
     }
 
     public void SetGrowth(int numGrowthPerTurn) {
 
-        GameObject x;
         switch(numGrowthPerTurn){
 
             case 0:
                 break;
             case 1:
-                Instantiate(growthTokenPrefab1, gameObject.transform, false);
-                
+                this.instantiatedGrowthToken = Instantiate(
+                    growthTokenPrefab1,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
             case 2:
-                Instantiate(growthTokenPrefab2, gameObject.transform, false);
-                
+                this.instantiatedGrowthToken = Instantiate(
+                    growthTokenPrefab2,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
             case 3:
-                Instantiate(growthTokenPrefab3, gameObject.transform, false);
-                
+                this.instantiatedGrowthToken = Instantiate(
+                    growthTokenPrefab3,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
             case 4:
-                Instantiate(growthTokenPrefab4, gameObject.transform, false);
-                
+                this.instantiatedGrowthToken = Instantiate(
+                    growthTokenPrefab4,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
             case 5:
-                x = Instantiate(growthTokenPrefab5, gameObject.transform, false);
+                this.instantiatedGrowthToken = Instantiate(
+                    growthTokenPrefab5,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
-
             default:
                 Debug.LogError("tried to instantiate resource tile with more than 5 growth.");
                 break;   
@@ -120,29 +137,44 @@ public class ResourceTileManager : MonoBehaviour, IClickable
 
     public void SetProduction(int numProductionPerTurn) {
 
-        GameObject x;
         switch(numProductionPerTurn){
 
             case 0:
                 break;
             case 1:
-                Instantiate(productionTokenPrefab1, gameObject.transform, false);
-                
+                this.instantiatedProductionToken = Instantiate(
+                    productionTokenPrefab1,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
             case 2:
-                Instantiate(productionTokenPrefab2, gameObject.transform, false);
-                
+                this.instantiatedProductionToken = Instantiate(
+                    productionTokenPrefab2,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
             case 3:
-                Instantiate(productionTokenPrefab3, gameObject.transform, false);
-                
+                this.instantiatedProductionToken = Instantiate(
+                    productionTokenPrefab3,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
             case 4:
-                Instantiate(productionTokenPrefab4, gameObject.transform, false);
-                
+                this.instantiatedProductionToken = Instantiate(
+                    productionTokenPrefab4,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
             case 5:
-                x = Instantiate(productionTokenPrefab5, gameObject.transform, false);
+                this.instantiatedProductionToken = Instantiate(
+                    productionTokenPrefab5,
+                    gameObject.transform.position,
+                    Quaternion.LookRotation(new Vector3(1, 1, 1), new Vector3(-1, 1, -1))
+                );
                 break;
 
             default:
@@ -322,10 +354,10 @@ public class ResourceTileManager : MonoBehaviour, IClickable
     }
 
     public void EndMouseOver() {
-        DestroyAllPrefabs();
+        DestroyHoverOverPrefabs();
     }
 
-    private void DestroyAllPrefabs() {
+    private void DestroyHoverOverPrefabs() {
         if (hoverOverCityTile != null) {
             Destroy(hoverOverCityTile);
             hoverOverCityTile = null;
@@ -344,5 +376,13 @@ public class ResourceTileManager : MonoBehaviour, IClickable
             Destroy(instantiatedBorderPrefab);
         }
         hoverOverCityTileBorders.Clear();
+    }
+
+    public void OnDestroy()
+    {
+        DestroyHoverOverPrefabs();
+
+        Destroy(this.instantiatedGrowthToken);
+        Destroy(this.instantiatedProductionToken);
     }
 }
